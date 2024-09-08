@@ -1,21 +1,37 @@
+'use client';
 import Link from 'next/link';
-
-const Footer = () => {
-  return (
-    <footer className="flex w-full shrink-0 flex-col items-center gap-2 border-t px-4 py-6 sm:flex-row md:px-6">
-      <p className="text-xs text-gray-500 dark:text-gray-400">
-        © 2023 ResumeBuilder Inc. All rights reserved.
-      </p>
-      <nav className="flex gap-4 sm:ml-auto sm:gap-6">
-        <Link className="text-xs underline-offset-4 hover:underline" href="#">
-          Terms of Service
-        </Link>
-        <Link className="text-xs underline-offset-4 hover:underline" href="#">
-          Privacy
-        </Link>
-      </nav>
-    </footer>
-  );
-};
+import { motion } from 'framer-motion';
+import X from '@/app/vectors/X';
+import Github from '@/app/vectors/Github';
+const Footer = () => (
+  <motion.footer
+    className="py-8 backdrop-blur-md"
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    transition={{ duration: 0.5, delay: 1 }}
+  >
+    <div className="container mx-auto flex flex-wrap gap-6 items-center justify-around px-4 max-sm:flex-col">
+      <div className="mb-4 md:mb-0 text-center">&copy; 2023 ResumeBuilder. All rights reserved.</div>
+      <div className="flex flex-wrap items-center justify-center sm:justify-between gap-10">
+        <div className="flex space-x-4">
+          <Link href="#" className="transition-colors">
+            <Github className="h-6 w-6" />
+          </Link>
+          <Link href="#" className="transition-colors">
+            <X className="h-6 w-6" />
+          </Link>
+        </div>
+        <div className="flex space-x-4">
+          <Link className="text-xs underline-offset-4 hover:underline" href="#">
+            Terms of Service
+          </Link>
+          <Link className="text-xs underline-offset-4 hover:underline" href="#">
+            Privacy
+          </Link>
+        </div>
+      </div>
+    </div>
+  </motion.footer>
+);
 
 export default Footer;

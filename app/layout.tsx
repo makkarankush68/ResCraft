@@ -4,8 +4,6 @@ import './globals.css';
 import { ThemeProvider } from '@/components/theme_provider';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import Image from 'next/image';
-import Football from './public/assets/images/1.svg';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -43,9 +41,6 @@ export default function RootLayout({
             <Header />
             {children}
             <Footer />
-            <div className="fixed inset-0 -z-50 opacity-5">
-              <Image src={Football} alt="Hero Image" fill />
-            </div>
           </main>
         </ThemeProvider>
       </body>
