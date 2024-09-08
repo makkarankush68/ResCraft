@@ -13,6 +13,42 @@ export default function PersonalInfoForm({ data, updateData }: PersonalInfoFormP
     updateData({ ...data, [field]: e.target.value });
   };
 
+  const PersonalInputFields: Record<
+    keyof PersonalInfo,
+    { label: string; placeholder: string; type: string }
+  > = {
+    name: {
+      label: 'Name',
+      placeholder: 'John Doe',
+      type: 'text'
+    },
+    email: {
+      label: 'Email',
+      placeholder: 'john@example.com',
+      type: 'email'
+    },
+    phone: {
+      label: 'Phone',
+      placeholder: '+1 (555) 123-4567',
+      type: 'tel'
+    },
+    linkedin: {
+      label: 'LinkedIn',
+      placeholder: 'linkedin.com/in/johndoe',
+      type: 'url'
+    },
+    github: {
+      label: 'GitHub',
+      placeholder: 'github.com/johndoe',
+      type: 'url'
+    },
+    twitter: {
+      label: 'Twitter',
+      placeholder: 'twitter.com/johndoe',
+      type: 'url'
+    }
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -20,62 +56,18 @@ export default function PersonalInfoForm({ data, updateData }: PersonalInfoFormP
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          <div>
-            <Label htmlFor="name">Full Name</Label>
-            <Input
-              id="name"
-              value={data.name}
-              onChange={handleChange('name')}
-              placeholder="John Doe"
-            />
-          </div>
-          <div>
-            <Label htmlFor="email">Email</Label>
-            <Input
-              id="email"
-              type="email"
-              value={data.email}
-              onChange={handleChange('email')}
-              placeholder="john@example.com"
-            />
-          </div>
-          <div>
-            <Label htmlFor="phone">Phone</Label>
-            <Input
-              id="phone"
-              type="tel"
-              value={data.phone}
-              onChange={handleChange('phone')}
-              placeholder="+1 (555) 123-4567"
-            />
-          </div>
-          <div>
-            <Label htmlFor="linkedin">LinkedIn</Label>
-            <Input
-              id="linkedin"
-              value={data.linkedin}
-              onChange={handleChange('linkedin')}
-              placeholder="linkedin.com/in/johndoe"
-            />
-          </div>
-          <div>
-            <Label htmlFor="github">GitHub</Label>
-            <Input
-              id="github"
-              value={data.github}
-              onChange={handleChange('github')}
-              placeholder="github.com/johndoe"
-            />
-          </div>
-          <div>
-            <Label htmlFor="twitter">Twitter</Label>
-            <Input
-              id="twitter"
-              value={data.twitter}
-              onChange={handleChange('twitter')}
-              placeholder="twitter.com/johndoe"
-            />
-          </div>
+          {Object.entries(PersonalInputFields).map(([field, { label, placeholder, type }]) => (
+            <div key={field}>
+              <Label htmlFor={field}>{label}</Label>
+              <Input
+                id={field}
+                type={type}
+                placeholder={placeholder}
+                value={data[field as keyof PersonalInfo]}
+                onChange={handleChange(field as keyof PersonalInfo)}
+              />
+            </div>
+          ))}
         </div>
       </CardContent>
     </Card>

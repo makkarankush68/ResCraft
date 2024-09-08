@@ -2,12 +2,12 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { ResumeData } from '@/lib/types';
-import PersonalInfoForm from './PersonalInfoForm';
-import ProjectsForm from './ProjectsForm';
-import WorkExperienceForm from './WorkExperienceForm';
-import EducationForm from './EducationForm';
-import SkillsForm from './SkillsForm';
-import ResumeSummary from './ResumeSummary';
+import PersonalInfoForm from '../PersonalInfoForm';
+import ProjectsForm from '../ProjectsForm';
+import WorkExperienceForm from '../WorkExperienceForm';
+import EducationForm from '../EducationForm';
+import SkillsForm from '../SkillsForm';
+import ResumeSummary from '../ResumeSummary';
 
 const initialResumeData: ResumeData = {
   personalInfo: {
@@ -31,6 +31,15 @@ const initialResumeData: ResumeData = {
   ],
   education: [{ institution: '', degree: '', startYear: '', endYear: '', marks: '' }],
   skills: { technical: [''], soft: [''], tools: [''], other: [''] }
+};
+
+const ResumeBuilderTabs: { [key: number]: string } = {
+  1: 'Personal Info',
+  2: 'Projects',
+  3: 'Work Experience',
+  4: 'Education',
+  5: 'Skills',
+  6: 'Summary'
 };
 
 export default function ResumeBuilder() {
@@ -89,25 +98,15 @@ export default function ResumeBuilder() {
     <div className="container m-auto max-w-4xl p-4">
       <h1 className="mb-6 text-center text-3xl font-bold">Resume Builder</h1>
       <div className="mb-6">
-        <div className="flex items-center justify-between">
-          {[1, 2, 3, 4, 5, 6].map((s) => (
+        <div className="scrollbar-hide flex items-center justify-between overflow-x-auto">
+          {Object.keys(ResumeBuilderTabs).map((s) => (
             <Button
               key={s}
-              variant={s === step ? 'default' : 'outline'}
-              onClick={() => setStep(s)}
+              variant={Number(s) === step ? 'default' : 'outline'}
+              onClick={() => setStep(Number(s))}
               className="mx-1 w-full"
             >
-              {s === 1
-                ? 'Personal'
-                : s === 2
-                  ? 'Projects'
-                  : s === 3
-                    ? 'Work'
-                    : s === 4
-                      ? 'Education'
-                      : s === 5
-                        ? 'Skills'
-                        : 'Summary'}
+              {ResumeBuilderTabs[Number(s)]}
             </Button>
           ))}
         </div>
