@@ -10,9 +10,11 @@ const Footer = () => (
     animate={{ opacity: 1 }}
     transition={{ duration: 0.5, delay: 1 }}
   >
-    <div className="container mx-auto flex flex-wrap gap-6 items-center justify-around px-4 max-sm:flex-col">
-      <div className="mb-4 md:mb-0 text-center">&copy; 2023 ResumeBuilder. All rights reserved.</div>
-      <div className="flex flex-wrap items-center justify-center sm:justify-between gap-10">
+    <div className="container mx-auto flex flex-wrap items-center justify-around gap-6 px-4 max-sm:flex-col">
+      <div className="mb-4 text-center md:mb-0">
+        &copy; 2024 ResumeBuilder. All rights reserved.
+      </div>
+      <div className="flex flex-wrap items-center justify-center gap-10 sm:justify-between">
         <div className="flex space-x-4">
           <Link href="#" className="transition-colors">
             <Github className="h-6 w-6" />

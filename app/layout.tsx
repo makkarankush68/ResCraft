@@ -33,14 +33,16 @@ export default function RootLayout({
       >
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
+          defaultTheme="dark"
           enableSystem
           disableTransitionOnChange
+          enableColorScheme={true}
         >
-          <main className="min-h-screen bg-background">
+          <main className="pt-navHeight min-h-screen bg-background">
             <Header />
             {children}
             <Footer />
+            <div className="fixed inset-0 top-0 -z-10 bg-gradient-to-b from-transparent to-slate-400 dark:from-slate-800 dark:to-transparent"></div>
           </main>
         </ThemeProvider>
       </body>

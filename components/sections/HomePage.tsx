@@ -1,16 +1,15 @@
 'use client';
-
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
-import { Zap, Award, FileText, Briefcase, GraduationCap, ArrowRight, Mail } from 'lucide-react';
+import { Zap, Award, Briefcase, GraduationCap, ArrowRight, Mail, Shield } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 
 // Hero Section Component
 const HeroSection = () => (
-  <div className="flex min-h-screen items-center justify-center bg-gradient-to-b from-white to-slate-600/60 pt-16 dark:from-slate-800 dark:to-black">
+  <div className="relative flex min-h-[calc(100vh_-_var(--navHeight))] items-center justify-center">
     <div className="container mx-auto px-4 py-16 text-center">
       <motion.h1
         className="mb-8 text-5xl font-bold md:text-7xl"
@@ -22,12 +21,20 @@ const HeroSection = () => (
         <Zap className="ml-4 inline-block h-16 w-16" />
       </motion.h1>
       <motion.p
-        className="mb-12 text-xl md:text-2xl"
+        className="mb-6 text-xl md:text-2xl"
         initial={{ opacity: 0, y: -30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
       >
         Create a professional resume in minutes with our intuitive builder
+      </motion.p>
+      <motion.p
+        className="mb-12 text-xl md:text-2xl"
+        initial={{ opacity: 0, y: -30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+      >
+        Professional Resume in minutes. Easy to use, AI-powered, and ATS-friendly.
       </motion.p>
       <motion.div
         initial={{ opacity: 0, y: 30 }}
@@ -51,9 +58,19 @@ const FeaturesSection = () => {
 
   const features = [
     {
-      icon: FileText,
-      title: 'Personal Info',
-      description: 'Easily input your contact details and social links'
+      icon: Zap,
+      title: 'Quick and Easy',
+      description: 'Create a professional resume in just minutes with our intuitive builder'
+    },
+    {
+      icon: Shield,
+      title: 'ATS-Friendly',
+      description: 'Our resumes are optimized to pass Applicant Tracking Systems'
+    },
+    {
+      icon: Award,
+      title: 'Expert-Approved Templates',
+      description: 'Choose from a variety of professional templates designed by experts'
     },
     {
       icon: Briefcase,
@@ -84,7 +101,7 @@ const FeaturesSection = () => {
           Powerful Features
         </motion.h2>
         <motion.div
-          className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4"
+          className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
@@ -104,7 +121,7 @@ const FeaturesSection = () => {
                     className="mt-4 h-1 bg-slate-600 dark:bg-slate-400"
                     initial={{ width: 0 }}
                     animate={{ width: hoveredCard === index ? '100%' : '0%' }}
-                    transition={{ duration: 0.3 }}
+                    transition={{ duration: 0.4 }}
                   />
                 </motion.div>
               </CardContent>

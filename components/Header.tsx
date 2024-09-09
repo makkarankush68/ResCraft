@@ -5,22 +5,24 @@ import { motion } from 'framer-motion';
 
 const Header = () => (
   <motion.header
-    className="bg-ghost_white/50 fixed left-0 right-0 top-0 z-50 backdrop-blur-md"
+    className="fixed left-0 right-0 top-0 z-50 backdrop-blur-md"
     initial={{ y: -100 }}
     animate={{ y: 0 }}
     transition={{ duration: 0.5 }}
   >
     <div className="container mx-auto flex items-center justify-between px-4 py-4">
-      <motion.div className="text-chocolate_cosmos text-2xl font-bold" whileHover={{ scale: 1.05 }}>
-        ResumeBuilder
-      </motion.div>
+      <Link href="/">
+        <motion.div className="cursor-pointer text-2xl font-bold" whileHover={{ scale: 1.05 }}>
+          ResumeBuilder
+        </motion.div>
+      </Link>
       <nav className="flex items-center gap-6">
         <ModeToggle />
         <ul className="flex space-x-4">
           <li>
             <Link
               href="#features"
-              className="text-chocolate_cosmos hover:text-tropical_indigo transition-colors"
+              className="transition-colors hover:text-slate-600 dark:hover:text-slate-400"
             >
               Features
             </Link>
@@ -28,7 +30,7 @@ const Header = () => (
           <li>
             <Link
               href="#"
-              className="text-chocolate_cosmos hover:text-tropical_indigo transition-colors"
+              className="transition-colors hover:text-slate-600 dark:hover:text-slate-400"
             >
               Pricing
             </Link>
@@ -36,7 +38,7 @@ const Header = () => (
           <li>
             <Link
               href="#"
-              className="text-chocolate_cosmos hover:text-tropical_indigo transition-colors"
+              className="transition-colors hover:text-slate-600 dark:hover:text-slate-400"
             >
               About
             </Link>
@@ -44,7 +46,7 @@ const Header = () => (
           <li>
             <Link
               href="#"
-              className="text-chocolate_cosmos hover:text-tropical_indigo transition-colors"
+              className="transition-colors hover:text-slate-600 dark:hover:text-slate-400"
             >
               Contact
             </Link>
