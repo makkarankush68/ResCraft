@@ -1,5 +1,5 @@
 'use client';
-import { ModeToggle } from '@/components/ThemeToggle';
+// import { ModeToggle } from '@/components/ThemeToggle';
 import Link from 'next/link';
 import {
   Drawer,
@@ -18,25 +18,22 @@ import { FileCheck2 } from 'lucide-react';
 const NavLinks = () => (
   <>
     <li>
-      <Link
-        href="/#features"
-        className="transition-colors hover:text-slate-600 dark:hover:text-slate-400"
-      >
+      <Link href="/#features" className="transition-colors hover:text-[var(--slate-6-4)]">
         Features
       </Link>
     </li>
     <li>
-      <Link href="#" className="transition-colors hover:text-slate-600 dark:hover:text-slate-400">
+      <Link href="#" className="transition-colors hover:text-[var(--slate-6-4)]">
         Pricing
       </Link>
     </li>
     <li>
-      <Link href="#" className="transition-colors hover:text-slate-600 dark:hover:text-slate-400">
+      <Link href="#" className="transition-colors hover:text-[var(--slate-6-4)]">
         About
       </Link>
     </li>
     <li>
-      <Link href="#" className="transition-colors hover:text-slate-600 dark:hover:text-slate-400">
+      <Link href="#" className="transition-colors hover:text-[var(--slate-6-4)]">
         Contact
       </Link>
     </li>
@@ -50,7 +47,7 @@ const Header = () => (
     animate={{ y: 0 }}
     transition={{ duration: 0.5 }}
   >
-    <div className="container mx-auto flex items-center justify-between px-4 py-4">
+    <div className="container max-w-7xl mx-auto flex items-center justify-between px-4 py-4">
       <Link href="/">
         <motion.div
           className="flex cursor-pointer gap-2 text-2xl font-bold"
@@ -61,7 +58,7 @@ const Header = () => (
         </motion.div>
       </Link>
       <nav className="flex items-center gap-6">
-        <ModeToggle />
+        {/* <ModeToggle /> */}
         <ul className="flex space-x-4 max-sm:hidden">
           <NavLinks />
         </ul>
@@ -69,7 +66,7 @@ const Header = () => (
           <DrawerTrigger className="sm:hidden">
             <PanelBottomClose className="h-6 w-6" />
           </DrawerTrigger>
-          <DrawerContent className="border-none bg-black/50 text-white backdrop-blur-sm mx-2">
+          <DrawerContent className="mx-2 border-none bg-black/50 text-white backdrop-blur-sm">
             <ul className="flex space-x-4 max-sm:hidden"></ul>
             <DrawerHeader>
               <DrawerTitle>

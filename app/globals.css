@@ -54,6 +54,7 @@ body {
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
     --navHeight: 72.25px;
+    --slate-6-4: #475569;
   }
   .dark {
     --background: 0 0% 3.9%;
@@ -80,6 +81,7 @@ body {
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+    --slate-6-4: #475569;
   }
 }
 
@@ -92,11 +94,10 @@ body {
   }
 }
 
-
 /* hide scrollbar */
 .scrollbar-hide {
   scrollbar-width: none; /* For Firefox */
-  -ms-overflow-style: none;  /* For Internet Explorer and Edge */
+  -ms-overflow-style: none; /* For Internet Explorer and Edge */
 }
 
 .scrollbar-hide::-webkit-scrollbar {

@@ -34,6 +34,7 @@ export default function RootLayout({
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
+          forcedTheme='dark'
           enableSystem
           disableTransitionOnChange
           enableColorScheme={true}
@@ -42,7 +43,7 @@ export default function RootLayout({
             <Header />
             {children}
             <Footer />
-            <div className="fixed inset-0 top-0 -z-10 bg-gradient-to-b from-transparent to-slate-400 dark:from-slate-800 dark:to-transparent"></div>
+            <div className="fixed inset-0 top-0 -z-10 bg-gradient-to-b from-transparent to-slate-500 dark:from-slate-800 dark:to-transparent"></div>
           </main>
         </ThemeProvider>
       </body>

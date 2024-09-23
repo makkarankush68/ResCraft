@@ -6,25 +6,32 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Zap, Award, Briefcase, GraduationCap, ArrowRight, Mail, Shield } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { HoverBorderGradient } from '../ui/hover-border-gradient';
+import { LampContainer } from '../ui/lamp';
 
 // Hero Section Component
 const HeroSection = () => (
-  <div className="relative flex min-h-[calc(100vh_-_var(--navHeight))] items-center justify-center">
-    <div className="container mx-auto px-4 py-16 text-center">
+  <LampContainer className="relative -mt-[var(--navHeight)] flex min-h-[calc(100vh_-_var(--navHeight))] items-center justify-center">
+    <motion.div
+      initial={{ opacity: 0.5, y: -10 }}
+      whileInView={{ opacity: 1, y: 200 }}
+      transition={{
+        delay: 0.3,
+        duration: 0.8,
+        ease: 'easeInOut'
+      }}
+      className="bg-gradient-to-br from-slate-100 to-slate-500 bg-clip-text py-4 text-center text-4xl font-medium tracking-tight text-transparent md:text-7xl"
+    >
       <motion.h1
-        className="mb-8 flex flex-wrap justify-center gap-2.5 text-4xl font-bold sm:text-5xl md:text-7xl"
+        className="m-8 flex flex-wrap justify-center gap-2.5 text-4xl font-bold sm:text-5xl md:text-7xl"
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <span>Craft Your Perfect</span>
-        <span>
-          Resume
-          <Zap className="ml-4 inline-block size-10 sm:size-16" />
-        </span>
+        Craft Your Perfect Resume
       </motion.h1>
       <motion.p
-        className="mb-6 text-lg sm:text-xl md:text-2xl"
+        className="mb-6 text-lg tracking-wide sm:text-xl md:text-2xl"
         initial={{ opacity: 0, y: -30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
@@ -40,14 +47,17 @@ const HeroSection = () => (
         transition={{ duration: 0.5, delay: 0.4 }}
       >
         <Link href="/resume" passHref>
-          <Button size="lg" className="transition-colors duration-300 hover:opacity-90">
+          <HoverBorderGradient
+            className="flex items-center justify-center gap-1.5 text-xl tracking-wide"
+            containerClassName="mx-auto "
+          >
             Get Started
             <ArrowRight className="ml-2 h-5 w-4" />
-          </Button>
+          </HoverBorderGradient>
         </Link>
       </motion.div>
-    </div>
-  </div>
+    </motion.div>
+  </LampContainer>
 );
 
 // Features Section Component
