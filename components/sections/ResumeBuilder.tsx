@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { ResumeData } from '@/lib/types';
 import PersonalInfoForm from '../PersonalInfoForm';
@@ -16,9 +16,10 @@ const initialResumeData: ResumeData = {
     phone: '',
     linkedin: '',
     github: '',
-    twitter: ''
+    twitter: '',
+    portfolio: ''
   },
-  projects: [{ name: '', description: [''], techUsed: [''], date: '' }],
+  projects: [{ name: '', description: [], techUsed: [], date: '' }],
   workExperience: [
     {
       company: '',
@@ -26,11 +27,11 @@ const initialResumeData: ResumeData = {
       location: '',
       startDate: '',
       endDate: '',
-      description: ['']
+      description: []
     }
   ],
   education: [{ institution: '', degree: '', startYear: '', endYear: '', marks: '' }],
-  skills: { technical: [''], soft: [''], tools: [''], other: [''] }
+  skills: { technical: [], soft: [], tools: [], other: [] }
 };
 
 const ResumeBuilderTabs: { [key: number]: string } = {
@@ -49,6 +50,9 @@ export default function ResumeBuilder() {
   const updateResumeData = (field: keyof ResumeData, value: ResumeData[keyof ResumeData]) => {
     setResumeData((prev) => ({ ...prev, [field]: value }));
   };
+  useEffect(() => {
+    console.log(resumeData);
+  }, [resumeData, step]);
 
   const renderStep = () => {
     switch (step) {
@@ -113,7 +117,7 @@ export default function ResumeBuilder() {
       </div>
       <div className="flex min-h-[70vh] flex-col justify-between">
         {renderStep()}
-        <div className="mt-6 flex justify-between">
+        <div className="mx-auto mt-6 flex w-[90%] justify-between">
           <Button onClick={() => setStep(step - 1)} disabled={step === 1}>
             Previous
           </Button>

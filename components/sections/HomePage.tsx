@@ -12,31 +12,29 @@ const HeroSection = () => (
   <div className="relative flex min-h-[calc(100vh_-_var(--navHeight))] items-center justify-center">
     <div className="container mx-auto px-4 py-16 text-center">
       <motion.h1
-        className="mb-8 text-5xl font-bold md:text-7xl"
+        className="mb-8 flex flex-wrap justify-center gap-2.5 text-4xl font-bold sm:text-5xl md:text-7xl"
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        Craft Your Perfect Resume
-        <Zap className="ml-4 inline-block h-16 w-16" />
+        <span>Craft Your Perfect</span>
+        <span>
+          Resume
+          <Zap className="ml-4 inline-block size-10 sm:size-16" />
+        </span>
       </motion.h1>
       <motion.p
-        className="mb-6 text-xl md:text-2xl"
+        className="mb-6 text-lg sm:text-xl md:text-2xl"
         initial={{ opacity: 0, y: -30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
       >
-        Create a professional resume in minutes with our intuitive builder
-      </motion.p>
-      <motion.p
-        className="mb-12 text-xl md:text-2xl"
-        initial={{ opacity: 0, y: -30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
-      >
-        Professional Resume in minutes. Easy to use, AI-powered, and ATS-friendly.
+        Professional Resume in minutes. With our intuitive builder.
+        <br />
+        Easy to use, AI-powered, and ATS-friendly.
       </motion.p>
       <motion.div
+        className="pt-10"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.4 }}
@@ -113,6 +111,8 @@ const FeaturesSection = () => {
                   whileHover={{ scale: 1.05 }}
                   onHoverStart={() => setHoveredCard(index)}
                   onHoverEnd={() => setHoveredCard(null)}
+                  onClick={() => setHoveredCard(index)}
+                  onBlur={() => setHoveredCard(null)}
                 >
                   <feature.icon className="mb-4 h-12 w-12 text-primary" />
                   <h3 className="mb-2 text-xl font-semibold text-primary">{feature.title}</h3>

@@ -46,6 +46,11 @@ export default function PersonalInfoForm({ data, updateData }: PersonalInfoFormP
       label: 'Twitter',
       placeholder: 'twitter.com/johndoe',
       type: 'url'
+    },
+    portfolio: {
+      label: 'Portfolio',
+      placeholder: 'johndoe.com',
+      type: 'url'
     }
   };
 

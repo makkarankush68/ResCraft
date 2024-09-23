@@ -12,7 +12,7 @@ const Footer = () => (
   >
     <div className="container mx-auto flex flex-wrap items-center justify-around gap-6 px-4 max-sm:flex-col">
       <div className="mb-4 text-center md:mb-0">
-        &copy; 2024 ResumeBuilder. All rights reserved.
+        &copy; 2024 ResCraft. All rights reserved.
       </div>
       <div className="flex flex-wrap items-center justify-center gap-10 sm:justify-between">
         <div className="flex space-x-4">
