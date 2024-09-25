@@ -23,7 +23,7 @@ const HeroSection = () => (
       className="bg-gradient-to-br from-slate-100 to-slate-500 bg-clip-text py-4 text-center text-4xl font-medium tracking-tight text-transparent md:text-7xl"
     >
       <motion.h1
-        className="m-8 flex flex-wrap justify-center gap-2.5 text-4xl font-bold sm:text-5xl md:text-7xl"
+        className="sm:m-8 max-sm:mb-4 max-sm:m-2 flex flex-wrap justify-center gap-2.5 text-4xl font-bold sm:text-5xl md:text-7xl"
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}

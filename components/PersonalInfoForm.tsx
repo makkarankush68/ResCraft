@@ -2,6 +2,7 @@ import { PersonalInfo } from '@/lib/types';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Textarea } from './ui/textarea';
 
 type PersonalInfoFormProps = {
   data: PersonalInfo;
@@ -9,9 +10,11 @@ type PersonalInfoFormProps = {
 };
 
 export default function PersonalInfoForm({ data, updateData }: PersonalInfoFormProps) {
-  const handleChange = (field: keyof PersonalInfo) => (e: React.ChangeEvent<HTMLInputElement>) => {
-    updateData({ ...data, [field]: e.target.value });
-  };
+  const handleChange =
+    (field: keyof PersonalInfo) =>
+    (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
+      updateData({ ...data, [field]: e.target.value });
+    };
 
   const PersonalInputFields: Record<
     keyof PersonalInfo,
@@ -51,6 +54,16 @@ export default function PersonalInfoForm({ data, updateData }: PersonalInfoFormP
       label: 'Portfolio',
       placeholder: 'johndoe.com',
       type: 'url'
+    },
+    location: {
+      label: 'Location',
+      placeholder: 'New York, USA',
+      type: 'text'
+    },
+    summary: {
+      label: 'Summary',
+      placeholder: 'A brief summary about yourself',
+      type: 'text'
     }
   };
 
@@ -64,13 +77,22 @@ export default function PersonalInfoForm({ data, updateData }: PersonalInfoFormP
           {Object.entries(PersonalInputFields).map(([field, { label, placeholder, type }]) => (
             <div key={field}>
               <Label htmlFor={field}>{label}</Label>
-              <Input
-                id={field}
-                type={type}
-                placeholder={placeholder}
-                value={data[field as keyof PersonalInfo]}
-                onChange={handleChange(field as keyof PersonalInfo)}
-              />
+              {field !== 'summary' ? (
+                <Input
+                  id={field}
+                  type={type}
+                  placeholder={placeholder}
+                  value={data[field as keyof PersonalInfo]}
+                  onChange={handleChange(field as keyof PersonalInfo)}
+                />
+              ) : (
+                <Textarea
+                  id={field}
+                  placeholder={placeholder}
+                  value={data[field as keyof PersonalInfo]}
+                  onChange={handleChange(field as keyof PersonalInfo)}
+                />
+              )}
             </div>
           ))}
         </div>

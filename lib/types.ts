@@ -6,6 +6,8 @@ export type PersonalInfo = {
   github: string;
   twitter: string;
   portfolio: string;
+  location: string;
+  summary: string;
 };
 //certifications: [{ name: 'Blockchain Development', institution: 'Coursera', date: '2023-10'},{ name: 'Full Stack Web Development', institution: 'Udemy', date: '2022-12'}], languages: [{ name: 'English', proficiency: 'Fluent'},{ name: 'Hindi', proficiency: 'Native'}]
 
