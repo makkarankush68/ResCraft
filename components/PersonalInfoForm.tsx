@@ -77,17 +77,10 @@ export default function PersonalInfoForm({ data, updateData }: PersonalInfoFormP
           {Object.entries(PersonalInputFields).map(([field, { label, placeholder, type }]) => (
             <div key={field}>
               <Label htmlFor={field}>{label}</Label>
-              {field !== 'summary' ? (
+              {field !== 'summary' && (
                 <Input
                   id={field}
                   type={type}
-                  placeholder={placeholder}
-                  value={data[field as keyof PersonalInfo]}
-                  onChange={handleChange(field as keyof PersonalInfo)}
-                />
-              ) : (
-                <Textarea
-                  id={field}
                   placeholder={placeholder}
                   value={data[field as keyof PersonalInfo]}
                   onChange={handleChange(field as keyof PersonalInfo)}
@@ -96,6 +89,12 @@ export default function PersonalInfoForm({ data, updateData }: PersonalInfoFormP
             </div>
           ))}
         </div>
+        <Textarea
+          id="summary"
+          placeholder="A brief summary about yourself"
+          value={data.summary}
+          onChange={handleChange('summary')}
+        />
       </CardContent>
     </Card>
   );

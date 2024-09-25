@@ -8,11 +8,11 @@ import WorkExperienceForm from '../WorkExperienceForm';
 import EducationForm from '../EducationForm';
 import SkillsForm from '../SkillsForm';
 import ResumeSummary from '../ResumeSummary';
-import { PDFViewer, PDFDownloadLink } from '@react-pdf/renderer';
 import ResumePreview from '../ResumePreview';
 import { Download } from 'lucide-react';
 import { StarsBackground } from '../ui/stars-background';
 import { ShootingStars } from '../ui/shooting-stars';
+import { PDFViewer, PDFDownloadLink } from '@react-pdf/renderer';
 
 const initialResumeData: ResumeData = {
   personalInfo: {
@@ -51,12 +51,17 @@ const ResumeBuilderTabs: { [key: number]: string } = {
 };
 
 export default function ResumeBuilder() {
+  const [loading, setLoading] = useState(true);
   const [step, setStep] = useState(1);
   const [resumeData, setResumeData] = useState<ResumeData>(initialResumeData);
   const [previewData, setPreviewData] = useState<ResumeData>(initialResumeData);
 
   const [showPDFToolbar, setShowPDFToolbar] = useState(false);
   const [timer, setTimer] = useState<NodeJS.Timeout>();
+
+  useEffect(() => {
+    setLoading(false);
+  }, []);
 
   const updateResumeData = (field: keyof ResumeData, value: ResumeData[keyof ResumeData]) => {
     setResumeData((prev) => ({ ...prev, [field]: value }));
@@ -132,7 +137,7 @@ export default function ResumeBuilder() {
       <StarsBackground className="absolute -top-20 -z-10" />
       <ShootingStars className="absolute -top-20 -z-10" />
       <div className="relative pb-10">
-        <h1 className="relative bg-gradient-to-b from-neutral-800 via-white to-white bg-clip-text text-center text-4xl font-medium tracking-tight text-transparent md:text-5xl">
+        <h1 className="relative bg-gradient-to-b from-neutral-400 via-white to-white bg-clip-text text-center text-4xl font-medium tracking-tight text-transparent md:text-5xl">
           Resume Builder
           <label className="absolute -bottom-10 right-0 inline-flex -translate-y-1/2 cursor-pointer items-center md:top-1/2">
             <input
@@ -142,7 +147,7 @@ export default function ResumeBuilder() {
               className="peer sr-only"
             />
             <div className="peer relative h-6 w-11 rounded-full border-gray-600 bg-gray-700 after:absolute after:start-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-800 rtl:peer-checked:after:-translate-x-full"></div>
-            <span className="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">
+            <span className="ms-3 text-sm font-medium tracking-normal text-gray-900 dark:text-gray-300">
               {showPDFToolbar ? 'Hide PDF Toolbar' : 'Show PDF Toolbar'}
             </span>
           </label>
@@ -164,39 +169,45 @@ export default function ResumeBuilder() {
       </div>
       <div className="grid gap-4 lg:grid-cols-2">
         <div className="flex min-h-[70vh] flex-col justify-between">{renderStep()}</div>
-        <PDFViewer
-          className={
-            'min-h-[70vh] w-full rounded-lg border-2 border-gray-200 ' +
-            (showPDFToolbar ? ' ' : ' hidden')
-          }
-          showToolbar={true}
-        >
-          <ResumePreview resumeData={previewData} />
-        </PDFViewer>
-        <PDFViewer
-          className={
-            'min-h-[70vh] w-full rounded-lg border-2 border-gray-200' +
-            (showPDFToolbar ? ' hidden' : '')
-          }
-          showToolbar={false}
-        >
-          <ResumePreview resumeData={previewData} />
-        </PDFViewer>
+        {!loading && (
+          <>
+            <PDFViewer
+              className={
+                'min-h-[70vh] w-full rounded-lg border-2 border-gray-200 ' +
+                (showPDFToolbar ? ' ' : ' hidden')
+              }
+              showToolbar={true}
+            >
+              <ResumePreview resumeData={previewData} />
+            </PDFViewer>
+            <PDFViewer
+              className={
+                'min-h-[70vh] w-full rounded-lg border-2 border-gray-200' +
+                (showPDFToolbar ? ' hidden' : '')
+              }
+              showToolbar={false}
+            >
+              <ResumePreview resumeData={previewData} />
+            </PDFViewer>
+          </>
+        )}
       </div>
       <div className="mx-auto mt-6 flex w-[90%] justify-between">
         <Button onClick={() => setStep(step - 1)} disabled={step === 1}>
           Previous
         </Button>
-        <PDFDownloadLink
-          document={<ResumePreview resumeData={previewData} />}
-          fileName="resume.pdf"
-          className="flex h-full w-full items-center justify-center"
-        >
-          <Button>
-            Download PDF
-            <Download size={16} className="ml-2" />
-          </Button>
-        </PDFDownloadLink>
+        {!loading && (
+          <PDFDownloadLink
+            document={<ResumePreview resumeData={previewData} />}
+            fileName="resume.pdf"
+            className="flex h-full w-full items-center justify-center"
+          >
+            <Button>
+              Download PDF
+              <Download size={16} className="ml-2" />
+            </Button>
+          </PDFDownloadLink>
+        )}
 
         <Button onClick={() => setStep(step + 1)} disabled={step === 6}>
           {step === 5 ? 'Finish' : 'Next'}
