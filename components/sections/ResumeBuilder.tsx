@@ -137,7 +137,12 @@ export default function ResumeBuilder() {
       <div className="relative pb-10">
         <h1 className="relative bg-gradient-to-b from-neutral-400 via-white to-white bg-clip-text text-center text-4xl font-medium tracking-tight text-transparent md:text-5xl">
           Resume Builder
-          <label className="absolute -bottom-10 right-0 inline-flex -translate-y-1/2 cursor-pointer items-center md:top-1/2">
+          <label
+            className={
+              'absolute -bottom-10 right-0 inline-flex -translate-y-1/2 cursor-pointer items-center md:top-1/2' +
+              (step === 0 ? ' hidden' : '')
+            }
+          >
             <input
               type="checkbox"
               checked={showPDFToolbar}
@@ -165,13 +170,36 @@ export default function ResumeBuilder() {
           ))}
         </div>
       </div>
+
       <div className={'grid gap-4 ' + (step === 0 ? 'grid-cols-1' : 'lg:grid-cols-2')}>
         <div className="flex min-h-[70vh] flex-col justify-between">{renderStep()}</div>
+        <div className="mx-auto mt-6 flex w-[90%] justify-between gap-2 max-lg:flex-col lg:hidden">
+          <div className="flex justify-around">
+            <Button onClick={() => setStep(step - 1)} disabled={step === 0}>
+              Previous
+            </Button>
+            <Button onClick={() => setStep(step + 1)} disabled={step === 6}>
+              {step === 5 ? 'Finish' : 'Next'}
+            </Button>
+          </div>
+          {!loading && step !== 0 && (
+            <PDFDownloadLink
+              document={renderResumePreview()}
+              fileName="resume.pdf"
+              className="flex h-full w-full items-center justify-center"
+            >
+              <Button>
+                Download PDF
+                <Download size={16} className="ml-2" />
+              </Button>
+            </PDFDownloadLink>
+          )}
+        </div>
         {!loading && step !== 0 && (
           <>
             <PDFViewer
               className={
-                'min-h-[70vh] w-full rounded-lg border-2 border-gray-200 ' +
+                'max-h-fit min-h-[50vh] w-full rounded-xl px-6 sm:min-h-[70vh] ' +
                 (showPDFToolbar ? ' ' : ' hidden')
               }
               showToolbar={true}
@@ -180,7 +208,7 @@ export default function ResumeBuilder() {
             </PDFViewer>
             <PDFViewer
               className={
-                'min-h-[70vh] w-full rounded-lg border-2 border-gray-200' +
+                'max-h-fit min-h-[50vh] w-full rounded-xl px-6 sm:min-h-[70vh] ' +
                 (showPDFToolbar ? ' hidden' : '')
               }
               showToolbar={false}
@@ -190,7 +218,8 @@ export default function ResumeBuilder() {
           </>
         )}
       </div>
-      <div className="mx-auto mt-6 flex w-[90%] justify-between">
+
+      <div className="mx-auto mt-6 flex w-[90%] justify-between max-lg:hidden">
         <Button onClick={() => setStep(step - 1)} disabled={step === 0}>
           Previous
         </Button>

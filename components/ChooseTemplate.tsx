@@ -10,10 +10,10 @@ const ChooseTemplate = ({
   setSelectedTemplate: (value: number) => void;
 }) => {
   return (
-    <div className="mx-auto flex w-full items-center justify-around">
-      <div>
-        <h2 className="mb-4 text-2xl font-semibold">Choose a Template</h2>
-        <div className="flex flex-col gap-3">
+    <div className="mx-auto flex max-md:flex-col w-full items-center justify-around">
+      <div >
+        <h2 className="mb-4 text-lg sm:text-2xl font-semibold text-center max-w-full">Choose a Template</h2>
+        <div className="flex md:flex-col gap-3 max-w-[90vw] scrollbar-hide overflow-x-scroll">
           <Button
             onClick={() => setSelectedTemplate(1)}
             variant={selectedTemplate === 1 ? 'default' : 'outline'}
