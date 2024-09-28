@@ -1,8 +1,8 @@
 'use client';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import X from '@/app/public/vectors/X';
-import Github from '@/app/public/vectors/Github';
+import X from '@/public/vectors/X';
+import Github from '@/public/vectors/Github';
 const Footer = () => (
   <motion.footer
     className="py-8 backdrop-blur-md"

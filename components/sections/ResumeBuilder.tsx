@@ -8,14 +8,18 @@ import WorkExperienceForm from '../WorkExperienceForm';
 import EducationForm from '../EducationForm';
 import SkillsForm from '../SkillsForm';
 import ResumeSummary from '../ResumeSummary';
-import ResumePreview from '../ResumePreview';
+import ResumePreview from '../previews/ResumePreview';
+import ResumePreview2 from '../previews/ResumePreview2';
+import ResumePreview3 from '../previews/ResumePreview3';
 import { Download } from 'lucide-react';
 import { StarsBackground } from '../ui/stars-background';
 import { ShootingStars } from '../ui/shooting-stars';
 import { PDFViewer, PDFDownloadLink } from '@react-pdf/renderer';
 import { initialResumeData } from '@/lib/initialResumeData';
+import ChooseTemplate from '../ChooseTemplate';
 
 const ResumeBuilderTabs: { [key: number]: string } = {
+  0: 'Choose Template',
   1: 'Personal Info',
   2: 'Projects',
   3: 'Work Experience',
@@ -26,10 +30,10 @@ const ResumeBuilderTabs: { [key: number]: string } = {
 
 export default function ResumeBuilder() {
   const [loading, setLoading] = useState(true);
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(0);
   const [resumeData, setResumeData] = useState<ResumeData>(initialResumeData);
   const [previewData, setPreviewData] = useState<ResumeData>(initialResumeData);
-
+  const [selectedTemplate, setSelectedTemplate] = useState<number>(1);
   const [showPDFToolbar, setShowPDFToolbar] = useState(false);
   const [timer, setTimer] = useState<NodeJS.Timeout>();
 
@@ -48,22 +52,29 @@ export default function ResumeBuilder() {
     setTimer(t);
   };
 
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'ArrowRight' && step < 6) {
-        setStep((prevStep) => prevStep + 1);
-      } else if (event.key === 'ArrowLeft' && step > 1) {
-        setStep((prevStep) => prevStep - 1);
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [step]);
+  // useEffect(() => {
+  //   const handleKeyDown = (event: KeyboardEvent) => {
+  //     if (event.key === 'ArrowRight' && step < 6) {
+  //       setStep((prevStep) => prevStep + 1);
+  //     } else if (event.key === 'ArrowLeft' && step > 0) {
+  //       setStep((prevStep) => prevStep - 1);
+  //     }
+  //   };
+  //   window.addEventListener('keydown', handleKeyDown);
+  //   return () => {
+  //     window.removeEventListener('keydown', handleKeyDown);
+  //   };
+  // }, [step]);
 
   const renderStep = () => {
     switch (step) {
+      case 0:
+        return (
+          <ChooseTemplate
+            selectedTemplate={selectedTemplate}
+            setSelectedTemplate={setSelectedTemplate}
+          />
+        );
       case 1:
         return (
           <PersonalInfoForm
@@ -106,6 +117,19 @@ export default function ResumeBuilder() {
     }
   };
 
+  const renderResumePreview = () => {
+    switch (selectedTemplate) {
+      case 1:
+        return <ResumePreview resumeData={previewData} />;
+      case 2:
+        return <ResumePreview2 resumeData={previewData} />;
+      case 3:
+        return <ResumePreview3 resumeData={previewData} />;
+      default:
+        return <ResumePreview resumeData={previewData} />;
+    }
+  };
+
   return (
     <div className="relative z-0 m-auto p-4">
       <StarsBackground className="absolute -top-20 -z-10" />
@@ -141,9 +165,9 @@ export default function ResumeBuilder() {
           ))}
         </div>
       </div>
-      <div className="grid gap-4 lg:grid-cols-2">
+      <div className={'grid gap-4 ' + (step === 0 ? 'grid-cols-1' : 'lg:grid-cols-2')}>
         <div className="flex min-h-[70vh] flex-col justify-between">{renderStep()}</div>
-        {!loading && (
+        {!loading && step !== 0 && (
           <>
             <PDFViewer
               className={
@@ -152,7 +176,7 @@ export default function ResumeBuilder() {
               }
               showToolbar={true}
             >
-              <ResumePreview resumeData={previewData} />
+              {renderResumePreview()}
             </PDFViewer>
             <PDFViewer
               className={
@@ -161,18 +185,18 @@ export default function ResumeBuilder() {
               }
               showToolbar={false}
             >
-              <ResumePreview resumeData={previewData} />
+              {renderResumePreview()}
             </PDFViewer>
           </>
         )}
       </div>
       <div className="mx-auto mt-6 flex w-[90%] justify-between">
-        <Button onClick={() => setStep(step - 1)} disabled={step === 1}>
+        <Button onClick={() => setStep(step - 1)} disabled={step === 0}>
           Previous
         </Button>
-        {!loading && (
+        {!loading && step !== 0 && (
           <PDFDownloadLink
-            document={<ResumePreview resumeData={previewData} />}
+            document={renderResumePreview()}
             fileName="resume.pdf"
             className="flex h-full w-full items-center justify-center"
           >
@@ -182,7 +206,6 @@ export default function ResumeBuilder() {
             </Button>
           </PDFDownloadLink>
         )}
-
         <Button onClick={() => setStep(step + 1)} disabled={step === 6}>
           {step === 5 ? 'Finish' : 'Next'}
         </Button>

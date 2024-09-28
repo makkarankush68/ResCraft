@@ -1,5 +1,6 @@
 import { Document, Page, Text, View, StyleSheet, Link, Font } from '@react-pdf/renderer';
 import { ResumeData } from '@/lib/types';
+
 Font.register({
   family: 'Oswald',
   src: 'https://fonts.gstatic.com/s/oswald/v13/Y_TKV6o8WovbUd3m_X9aAA.ttf'
@@ -86,18 +87,22 @@ const ResumePreview = ({ resumeData }: { resumeData: ResumeData }) => (
 
       {/* Experience Section */}
       {resumeData?.workExperience?.length > 0 && (
-        <View>
+        <View style={{ display: 'flex', flexDirection: 'column', gap: '12pt' }}>
           <Text style={styles.sectionTitle}>Experience</Text>
           {resumeData?.workExperience.map((job, index) => (
             <View key={index}>
-              <Text style={styles.subsectionTitle}>
-                {job?.company} ({job?.startDate} - {job?.endDate})
-              </Text>
-              <Text style={styles.listItem}>
-                <Text style={{ fontWeight: 'bold' }}>
-                  {job?.position} | {job?.location}
+              <View
+                style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}
+              >
+                <Text style={styles.subsectionTitle}>
+                  {job?.company} ({job?.startDate} - {job?.endDate})
                 </Text>
-              </Text>
+                <Text style={styles.listItem}>
+                  <Text style={{ fontWeight: 'bold' }}>
+                    {job?.position} | {job?.location}
+                  </Text>
+                </Text>
+              </View>
               {job?.description?.length > 0 &&
                 job?.description.map((desc, descIndex) => (
                   <Text key={descIndex} style={styles.listItem}>
@@ -111,24 +116,24 @@ const ResumePreview = ({ resumeData }: { resumeData: ResumeData }) => (
 
       {/* Projects Section */}
       {resumeData?.projects?.length > 0 && (
-        <View>
+        <View style={{ display: 'flex', flexDirection: 'column', gap: '12pt' }}>
           <Text style={styles.sectionTitle}>Projects</Text>
           {resumeData?.projects.map((project, index) => (
             <View key={index}>
-              <Text style={styles.subsectionTitle}>{project?.name}</Text>
+              <View
+                style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}
+              >
+                <Text style={styles.subsectionTitle}>
+                  {project?.name} ({project?.date})
+                </Text>
+                <Text style={styles.listItem}>{project?.techUsed.join(', ')}</Text>
+              </View>
               {project?.description?.length > 0 &&
                 project?.description.map((desc, descIndex) => (
                   <Text key={descIndex} style={styles.listItem}>
                     • {desc}
                   </Text>
                 ))}
-              <Text style={styles.listItem}>
-                <Text style={{ fontWeight: 'bold' }}>Technologies used:</Text>{' '}
-                {project?.techUsed.join(', ')}
-              </Text>
-              <Text style={styles.listItem}>
-                <Text style={{ fontWeight: 'bold' }}>Date:</Text> {project?.date}
-              </Text>
             </View>
           ))}
         </View>
@@ -139,13 +144,14 @@ const ResumePreview = ({ resumeData }: { resumeData: ResumeData }) => (
         <View>
           <Text style={styles.sectionTitle}>Education</Text>
           {resumeData?.education.map((edu, index) => (
-            <View key={index} style={styles.tableRow}>
-              <Text>{edu?.degree}</Text>
-              <Text>
-                {edu?.startYear} - {edu?.endYear}
+            <View key={index} style={styles.educationRow}>
+              <View style={styles.educationInstitution}>
+                <Text style={styles.educationInstitution}>{edu?.institution}</Text>
+                <Text style={styles.educationInstitution}>{edu?.degree}</Text>
+              </View>
+              <Text style={styles.educationDetails}>
+                {edu?.startYear} - {edu?.endYear} | {edu?.marks}
               </Text>
-              <Text>{edu?.institution}</Text>
-              <Text>{edu?.marks}</Text>
             </View>
           ))}
         </View>
@@ -204,11 +210,21 @@ const styles = StyleSheet.create({
     color: 'blue',
     textDecoration: 'none'
   },
-  tableRow: {
+  educationRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     fontSize: '10pt',
     marginBottom: '6pt'
+  },
+  educationInstitution: {
+    flex: 3,
+    fontSize: '10pt',
+    marginBottom: '12pt'
+  },
+  educationDetails: {
+    flex: 2,
+    textAlign: 'right',
+    fontSize: '10pt'
   }
 });
 

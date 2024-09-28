@@ -1,4 +1,4 @@
-import { ResumeData } from "./types";
+import { ResumeData } from './types';
 
 export const initialResumeData: ResumeData = {
   personalInfo: {
