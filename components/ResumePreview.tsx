@@ -211,5 +211,196 @@ const styles = StyleSheet.create({
     marginBottom: '6pt'
   }
 });
+const modernStyles = StyleSheet.create({
+  page: {
+    padding: '30pt',
+    fontSize: '12pt',
+    fontFamily: 'Arial',
+    lineHeight: 1.5,
+    backgroundColor: '#f5f5f5',
+  },
+  header: {
+    textAlign: 'left',
+    marginBottom: '30pt',
+  },
+  name: {
+    fontSize: '26pt',
+    fontWeight: '700',
+    color: '#333',
+  },
+  contact: {
+    fontSize: '11pt',
+    color: '#000',
+    textDecoration: 'underline',
+  },
+  sectionTitle: {
+    fontSize: '14pt',
+    fontWeight: '600',
+    marginBottom: '8pt',
+    borderBottom: '2pt solid #333',
+    paddingBottom: '4pt',
+    marginTop: '16pt',
+    color: '#333',
+  },
+  subsectionTitle: {
+    fontSize: '12pt',
+    fontWeight: '600',
+    marginBottom: '5pt',
+  },
+  listItem: {
+    fontSize: '11pt',
+    marginBottom: '8pt',
+    textAlign: 'left',
+    color: '#555',
+  },
+  fadedText: {
+    color: '#888',
+  },
+  info: {
+    fontSize: '11pt',
+    marginBottom: '10pt',
+    textAlign: 'left',
+    color: '#333',
+  },
+  link: {
+    color: '#1a73e8',
+    textDecoration: 'underline',
+  },
+  tableRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    fontSize: '11pt',
+    marginBottom: '8pt',
+  },
+});
+const vibrantStyles = StyleSheet.create({
+  page: {
+    padding: '50pt',
+    fontSize: '13pt',
+    fontFamily: 'Helvetica',
+    lineHeight: 1.6,
+    backgroundColor: '#ffffff',
+  },
+  header: {
+    textAlign: 'center',
+    marginBottom: '40pt',
+    color: '#ff6f61',
+  },
+  name: {
+    fontSize: '30pt',
+    fontWeight: '900',
+    color: '#ff6f61',
+  },
+  contact: {
+    fontSize: '12pt',
+    color: '#3b5998',
+    textDecoration: 'none',
+  },
+  sectionTitle: {
+    fontSize: '16pt',
+    fontWeight: '700',
+    marginBottom: '10pt',
+    borderBottom: '2pt solid #ff6f61',
+    paddingBottom: '5pt',
+    marginTop: '20pt',
+    color: '#ff6f61',
+  },
+  subsectionTitle: {
+    fontSize: '13pt',
+    fontWeight: '700',
+    marginBottom: '6pt',
+  },
+  listItem: {
+    fontSize: '12pt',
+    marginBottom: '10pt',
+    textAlign: 'justify',
+    color: '#333',
+  },
+  fadedText: {
+    color: '#b0b0b0',
+  },
+  info: {
+    fontSize: '12pt',
+    marginBottom: '10pt',
+    textAlign: 'justify',
+    color: '#333',
+  },
+  link: {
+    color: '#e91e63',
+    textDecoration: 'none',
+  },
+  tableRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    fontSize: '12pt',
+    marginBottom: '10pt',
+  },
+});
+const classicStyles = StyleSheet.create({
+  page: {
+    padding: '40pt',
+    fontSize: '11pt',
+    fontFamily: 'Georgia',
+    lineHeight: 1.4,
+  },
+  header: {
+    textAlign: 'center',
+    marginBottom: '20pt',
+    fontFamily: 'Georgia',
+  },
+  name: {
+    fontSize: '24pt',
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  contact: {
+    fontSize: '10pt',
+    color: '#000080',
+    textDecoration: 'none',
+    fontStyle: 'italic',
+  },
+  sectionTitle: {
+    fontSize: '12pt',
+    fontWeight: 'bold',
+    marginBottom: '6pt',
+    borderBottom: '1pt solid black',
+    paddingBottom: '2pt',
+    marginTop: '12pt',
+    color: '#000080',
+  },
+  subsectionTitle: {
+    fontSize: '11pt',
+    fontWeight: 'bold',
+    marginBottom: '4pt',
+    color: '#333',
+  },
+  listItem: {
+    fontSize: '10pt',
+    marginBottom: '6pt',
+    textAlign: 'justify',
+    color: '#444',
+  },
+  fadedText: {
+    color: 'gray',
+  },
+  info: {
+    fontSize: '10pt',
+    marginBottom: '8pt',
+    textAlign: 'justify',
+    color: '#444',
+  },
+  link: {
+    color: '#000080',
+    textDecoration: 'none',
+    fontStyle: 'italic',
+  },
+  tableRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    fontSize: '10pt',
+    marginBottom: '6pt',
+  },
+});
+
 
 export default ResumePreview;
