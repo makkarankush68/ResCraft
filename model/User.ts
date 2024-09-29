@@ -2,10 +2,11 @@ import mongoose, { Schema } from 'mongoose';
 
 interface User {
   email: string;
-  password: string;
+  password?: string;
   name: string;
   createdAt: Date;
   imageUrl?: string;
+  provider: 'google' | 'email';
 }
 
 const UserSchema = new Schema<User>({
@@ -17,7 +18,7 @@ const UserSchema = new Schema<User>({
   },
   password: {
     type: String,
-    required: [true, 'Password is required']
+    required: false
   },
   name: {
     type: String,
@@ -31,6 +32,11 @@ const UserSchema = new Schema<User>({
   imageUrl: {
     type: String,
     default: ''
+  },
+  provider: {
+    type: String,
+    required: [true, 'Provider is required'],
+    default: 'google'
   }
 });
 

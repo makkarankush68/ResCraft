@@ -27,18 +27,21 @@ const authOptions: NextAuthOptions = {
         await dbConnect();
         const existingUser = await UserModel.findOne({ email: profile.email });
 
+        const picture = (profile as { picture?: string })?.picture || '';
+
         if (existingUser) {
           // Update existing user information
           await UserModel.updateOne(
             { email: profile.email },
-            { name: profile.name, imageUrl: profile.picture || '' }
+            { name: profile.name, imageUrl: picture || '' }
           );
         } else {
           // Create a new user
           await UserModel.create({
             email: profile.email,
             name: profile.name,
-            imageUrl: profile.picture || ''
+            imageUrl: picture || '',
+            provider: 'google'
           });
         }
 
