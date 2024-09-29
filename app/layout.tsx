@@ -4,6 +4,7 @@ import './globals.css';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import Providers from '@/lib/Providers';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -34,15 +35,17 @@ export default function RootLayout({
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
-          forcedTheme='dark'
+          forcedTheme="dark"
           enableSystem
           disableTransitionOnChange
           enableColorScheme={true}
         >
-          <main className="pt-navHeight min-h-screen bg-background">
-            <Header />
-            {children}
-            <Footer />
+          <main className="min-h-screen bg-background pt-navHeight font-sans">
+            <Providers>
+              <Header />
+              {children}
+              <Footer />
+            </Providers>
             <div className="fixed inset-0 top-0 -z-10 bg-gradient-to-b from-transparent to-slate-500 dark:from-slate-800 dark:to-transparent"></div>
           </main>
         </ThemeProvider>

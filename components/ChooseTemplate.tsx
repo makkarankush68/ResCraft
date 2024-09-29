@@ -10,28 +10,21 @@ const ChooseTemplate = ({
   setSelectedTemplate: (value: number) => void;
 }) => {
   return (
-    <div className="mx-auto flex max-md:flex-col w-full items-center justify-around">
-      <div >
-        <h2 className="mb-4 text-lg sm:text-2xl font-semibold text-center max-w-full">Choose a Template</h2>
-        <div className="flex md:flex-col gap-3 max-w-[90vw] scrollbar-hide overflow-x-scroll">
-          <Button
-            onClick={() => setSelectedTemplate(1)}
-            variant={selectedTemplate === 1 ? 'default' : 'outline'}
-          >
-            Template 1
-          </Button>
-          <Button
-            onClick={() => setSelectedTemplate(2)}
-            variant={selectedTemplate === 2 ? 'default' : 'outline'}
-          >
-            Template 2
-          </Button>
-          <Button
-            onClick={() => setSelectedTemplate(3)}
-            variant={selectedTemplate === 3 ? 'default' : 'outline'}
-          >
-            Template 3
-          </Button>
+    <div className="mx-auto flex w-full items-center justify-around max-md:flex-col">
+      <div>
+        <h2 className="mb-4 max-w-full text-center text-lg font-semibold sm:text-2xl">
+          Choose a Template
+        </h2>
+        <div className="scrollbar-hide flex max-w-[90vw] gap-3 overflow-x-scroll md:flex-col">
+          {[...Array(3)].map((_, i) => (
+            <Button
+              key={i}
+              onClick={() => setSelectedTemplate(i + 1)}
+              variant={selectedTemplate === i + 1 ? 'default' : 'outline'}
+            >
+              Template {i + 1}
+            </Button>
+          ))}
         </div>
       </div>
 

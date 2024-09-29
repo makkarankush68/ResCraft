@@ -131,7 +131,7 @@ export default function ResumeBuilder() {
   };
 
   return (
-    <div className="relative z-0 m-auto p-4">
+    <div className="relative z-0 m-auto p-4 lg:p-8">
       <StarsBackground className="absolute -top-20 -z-10" />
       <ShootingStars className="absolute -top-20 -z-10" />
       <div className="relative pb-10">
