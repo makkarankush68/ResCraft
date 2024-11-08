@@ -1,7 +1,8 @@
+import { Schema } from 'mongoose';
 import { ResumeDataType } from './types';
 
 export const initialResumeData: ResumeDataType = {
-  title: 'Full Stack Developer',
+  title: 'full-stack-developer',
   personalInfo: {
     name: 'Jane Smith',
     email: 'jane.smith@example.com',
@@ -66,5 +67,7 @@ export const initialResumeData: ResumeDataType = {
     soft: ['Team Leadership', 'Communication', 'Problem-Solving', 'Time Management'],
     tools: ['Git', 'Docker', 'Kubernetes', 'Jenkins', 'AWS'],
     other: ['Project Management', 'Agile Methodologies', 'Public Speaking']
-  }
+  },
+  userId: new Schema.Types.ObjectId('temp'),
+  createdAt: new Date()
 };

@@ -10,7 +10,7 @@ const ChooseTemplate = ({
   setSelectedTemplate: (value: number) => void;
 }) => {
   return (
-    <div className="mx-auto flex w-full items-center justify-around max-md:flex-col">
+    <div className="flex h-full w-full items-center justify-around max-md:flex-col">
       <div>
         <h2 className="mb-4 max-w-full text-center text-lg font-semibold sm:text-2xl">
           Choose a Template
@@ -26,15 +26,6 @@ const ChooseTemplate = ({
             </Button>
           ))}
         </div>
-      </div>
-
-      <div className="flex p-4">
-        <Image
-          src={`/previews/resume${selectedTemplate || 1}.png`}
-          alt="Template 1"
-          width={400}
-          height={400}
-        />
       </div>
     </div>
   );

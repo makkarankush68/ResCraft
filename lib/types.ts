@@ -1,3 +1,5 @@
+import { Schema } from 'mongoose';
+
 export type PersonalInfo = {
   name: string;
   email: string;
@@ -9,7 +11,6 @@ export type PersonalInfo = {
   location?: string;
   summary: string;
 };
-//certifications: [{ name: 'Blockchain Development', institution: 'Coursera', date: '2023-10'},{ name: 'Full Stack Web Development', institution: 'Udemy', date: '2022-12'}], languages: [{ name: 'English', proficiency: 'Fluent'},{ name: 'Hindi', proficiency: 'Native'}]
 
 export type Project = {
   name: string;
@@ -49,4 +50,6 @@ export type ResumeDataType = {
   workExperience: WorkExperience[];
   education: Education[];
   skills: Skills;
+  userId: Schema.Types.ObjectId;
+  createdAt?: Date;
 };

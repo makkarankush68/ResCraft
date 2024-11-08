@@ -12,10 +12,7 @@ import ResumePreview from '../previews/ResumePreview';
 import ResumePreview2 from '../previews/ResumePreview2';
 import ResumePreview3 from '../previews/ResumePreview3';
 import { Download } from 'lucide-react';
-import { StarsBackground } from '../ui/stars-background';
-import { ShootingStars } from '../ui/shooting-stars';
 import { PDFViewer, PDFDownloadLink } from '@react-pdf/renderer';
-import { initialResumeData } from '@/lib/initialResumeData';
 import ChooseTemplate from '../ChooseTemplate';
 
 const ResumeBuilderTabs: { [key: number]: string } = {
@@ -28,11 +25,13 @@ const ResumeBuilderTabs: { [key: number]: string } = {
   6: 'Summary'
 };
 
-export default function ResumeBuilder() {
+export default function ResumeBuilder({ initial }: { initial: ResumeDataType }) {
+  console.log('initial:', initial);
+
   const [loading, setLoading] = useState(true);
   const [step, setStep] = useState(0);
-  const [resumeData, setResumeData] = useState<ResumeDataType>(initialResumeData);
-  const [previewData, setPreviewData] = useState<ResumeDataType>(initialResumeData);
+  const [resumeData, setResumeData] = useState<ResumeDataType>(initial);
+  const [previewData, setPreviewData] = useState<ResumeDataType>(initial);
   const [selectedTemplate, setSelectedTemplate] = useState<number>(1);
   const [showPDFToolbar, setShowPDFToolbar] = useState(false);
   const [timer, setTimer] = useState<NodeJS.Timeout>();
@@ -54,6 +53,27 @@ export default function ResumeBuilder() {
     }, 1000);
     setTimer(t);
   };
+
+  useEffect(() => {
+    setPreviewData(previewData);
+    const patchResumeData = async () => {
+      const res = await fetch(`/api/resume/`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          data: previewData
+        })
+      });
+      if (res.ok) {
+        console.log('Resume updated successfully');
+      } else {
+        console.error('Failed to update resume');
+      }
+    };
+    patchResumeData();
+  }, [previewData]);
 
   const renderStep = () => {
     switch (step) {
@@ -129,8 +149,6 @@ export default function ResumeBuilder() {
 
   return (
     <div className="relative z-0 m-auto p-4 lg:p-8">
-      <StarsBackground className="absolute -top-20 -z-10" />
-      <ShootingStars className="absolute -top-20 -z-10" />
       <div className="relative pb-10">
         <h1 className="relative bg-gradient-to-b from-neutral-400 via-white to-white bg-clip-text text-center text-4xl font-medium tracking-tight text-transparent md:text-5xl">
           Resume Builder
@@ -168,7 +186,7 @@ export default function ResumeBuilder() {
         </div>
       </div>
 
-      <div className={'grid gap-4 ' + (step === 0 ? 'grid-cols-1' : 'lg:grid-cols-2')}>
+      <div className={'grid gap-4 lg:grid-cols-2'}>
         <div className="flex min-h-[70vh] flex-col justify-between">{renderStep()}</div>
         <div className="mx-auto mt-6 flex w-[90%] justify-between gap-2 max-lg:flex-col lg:hidden">
           <div className="flex justify-around">
@@ -179,7 +197,7 @@ export default function ResumeBuilder() {
               {step === 5 ? 'Finish' : 'Next'}
             </Button>
           </div>
-          {!loading && step !== 0 && (
+          {!loading && (
             <PDFDownloadLink
               document={renderResumePreview()}
               fileName="resume.pdf"
@@ -192,7 +210,7 @@ export default function ResumeBuilder() {
             </PDFDownloadLink>
           )}
         </div>
-        {!loading && step !== 0 && (
+        {!loading && (
           <>
             <PDFViewer
               className={
@@ -220,7 +238,7 @@ export default function ResumeBuilder() {
         <Button onClick={() => setStep(step - 1)} disabled={step === 0}>
           Previous
         </Button>
-        {!loading && step !== 0 && (
+        {!loading && (
           <PDFDownloadLink
             document={renderResumePreview()}
             fileName="resume.pdf"
