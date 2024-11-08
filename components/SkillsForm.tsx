@@ -13,19 +13,19 @@ type SkillsFormProps = {
 export default function SkillsForm({ data, updateData }: SkillsFormProps) {
   const handleChange = (category: keyof Skills, index: number, value: string) => {
     const newData = { ...data };
-    newData[category][index] = value;
+    if (newData[category]) newData[category][index] = value;
     updateData(newData);
   };
 
   const addSkill = (category: keyof Skills) => {
     const newData = { ...data };
-    newData[category] = [...newData[category], ''];
+    newData[category] = [...(newData[category] || []), ''];
     updateData(newData);
   };
 
   const removeSkill = (category: keyof Skills, index: number) => {
     const newData = { ...data };
-    newData[category] = newData[category].filter((_, i) => i !== index);
+    if (newData[category]) newData[category] = newData[category].filter((_, i) => i !== index);
     updateData(newData);
   };
 
@@ -33,18 +33,19 @@ export default function SkillsForm({ data, updateData }: SkillsFormProps) {
     <Card>
       <CardContent className="pt-6">
         <div className="space-y-2">
-          {data[category].map((skill, index) => (
-            <div key={index} className="flex items-center space-x-2">
-              <Input
-                value={skill}
-                onChange={(e) => handleChange(category, index, e.target.value)}
-                placeholder={`${category.charAt(0).toUpperCase() + category.slice(1)} Skill`}
-              />
-              <Button variant="ghost" size="icon" onClick={() => removeSkill(category, index)}>
-                <Trash2 className="h-4 w-4" />
-              </Button>
-            </div>
-          ))}
+          {data[category] &&
+            data[category].map((skill, index) => (
+              <div key={index} className="flex items-center space-x-2">
+                <Input
+                  value={skill}
+                  onChange={(e) => handleChange(category, index, e.target.value)}
+                  placeholder={`${category.charAt(0).toUpperCase() + category.slice(1)} Skill`}
+                />
+                <Button variant="ghost" size="icon" onClick={() => removeSkill(category, index)}>
+                  <Trash2 className="h-4 w-4" />
+                </Button>
+              </div>
+            ))}
         </div>
         <Button variant="outline" size="sm" onClick={() => addSkill(category)} className="mt-4">
           <PlusCircle className="mr-2 h-4 w-4" />

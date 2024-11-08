@@ -142,20 +142,20 @@ export default function ResumeSummary({ data }: ResumeSummaryProps) {
           <div className="space-y-4">
             <div>
               <h4 className="font-semibold">Technical Skills</h4>
-              <p>{data.skills.technical.join(', ')}</p>
+              <p>{data?.skills?.technical?.join(', ')}</p>
             </div>
             <div>
               <h4 className="font-semibold">Soft Skills</h4>
-              <p>{data.skills.soft.join(', ')}</p>
+              <p>{data?.skills?.soft?.join(', ')}</p>
             </div>
             <div>
               <h4 className="font-semibold">Tools</h4>
-              <p>{data.skills.tools.join(', ')}</p>
+              <p>{data?.skills?.tools?.join(', ')}</p>
             </div>
-            {data.skills.other.length > 0 && (
+            {data?.skills?.other?.length && (
               <div>
                 <h4 className="font-semibold">Other Skills</h4>
-                <p>{data.skills.other.join(', ')}</p>
+                <p>{data?.skills?.other?.join(', ')}</p>
               </div>
             )}
           </div>

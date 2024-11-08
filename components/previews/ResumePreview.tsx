@@ -52,31 +52,31 @@ const ResumePreview = ({ resumeData }: { resumeData: ResumeDataType }) => (
       )}
 
       {/* Skills Section */}
-      {(resumeData?.skills?.technical?.length > 0 ||
-        resumeData?.skills?.soft?.length > 0 ||
-        resumeData?.skills?.tools?.length > 0 ||
-        resumeData?.skills?.other?.length > 0) && (
+      {(resumeData?.skills?.technical?.length ||
+        resumeData?.skills?.soft?.length ||
+        resumeData?.skills?.tools?.length ||
+        resumeData?.skills?.other?.length) && (
         <View>
           <Text style={styles.sectionTitle}>Skills</Text>
-          {resumeData?.skills?.technical?.length > 0 && (
+          {resumeData?.skills?.technical?.length && (
             <Text style={styles.listItem}>
               <Text style={{ fontWeight: 'bold' }}>Technical:</Text>{' '}
               {resumeData?.skills?.technical.join(', ')}
             </Text>
           )}
-          {resumeData?.skills?.soft?.length > 0 && (
+          {resumeData?.skills?.soft?.length && (
             <Text style={styles.listItem}>
               <Text style={{ fontWeight: 'bold' }}>Soft Skills:</Text>{' '}
               {resumeData?.skills?.soft.join(', ')}
             </Text>
           )}
-          {resumeData?.skills?.tools?.length > 0 && (
+          {resumeData?.skills?.tools?.length && (
             <Text style={styles.listItem}>
               <Text style={{ fontWeight: 'bold' }}>Tools:</Text>{' '}
               {resumeData?.skills?.tools.join(', ')}
             </Text>
           )}
-          {resumeData?.skills?.other?.length > 0 && (
+          {resumeData?.skills?.other?.length && (
             <Text style={styles.listItem}>
               <Text style={{ fontWeight: 'bold' }}>Other:</Text>{' '}
               {resumeData?.skills?.other.join(', ')}

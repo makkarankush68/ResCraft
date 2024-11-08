@@ -17,13 +17,14 @@ import {
 import Link from 'next/link';
 import { ShootingStars } from '@/components/ui/shooting-stars';
 import { StarsBackground } from '@/components/ui/stars-background';
+import { redirect } from 'next/navigation';
 
 export default function AuthPage() {
   const [isSignUp, setIsSignUp] = useState(false);
 
   const session = useSession();
   if (session) {
-    window.location.pathname = '/';
+    redirect('/');
   }
 
   const handleGoogleAuth = () => {

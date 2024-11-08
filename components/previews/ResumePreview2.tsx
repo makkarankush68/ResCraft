@@ -1,5 +1,5 @@
 import { Document, Page, Text, View, StyleSheet, Link, Font } from '@react-pdf/renderer';
-import { ResumeData } from '../../lib/types';
+import { ResumeDataType } from '../../lib/types';
 
 // Register font for enhanced styling
 Font.register({
@@ -7,7 +7,7 @@ Font.register({
   src: 'https://fonts.gstatic.com/s/oswald/v13/Y_TKV6o8WovbUd3m_X9aAA.ttf'
 });
 
-const ResumePreview = ({ resumeData }: { resumeData: ResumeData }) => (
+const ResumePreview = ({ resumeData }: { resumeData: ResumeDataType }) => (
   <Document>
     <Page size="A4" style={styles.page}>
       {/* Header */}
@@ -50,23 +50,23 @@ const ResumePreview = ({ resumeData }: { resumeData: ResumeData }) => (
       {resumeData?.skills && (
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Skills</Text>
-          {resumeData?.skills.technical.length > 0 && (
+          {resumeData?.skills.technical?.length && (
             <Text style={styles.listItem}>
               <Text style={styles.boldText}>Technical:</Text>{' '}
               {resumeData?.skills.technical.join(', ')}
             </Text>
           )}
-          {resumeData?.skills.soft.length > 0 && (
+          {resumeData?.skills.soft?.length && (
             <Text style={styles.listItem}>
               <Text style={styles.boldText}>Soft Skills:</Text> {resumeData?.skills.soft.join(', ')}
             </Text>
           )}
-          {resumeData?.skills.tools.length > 0 && (
+          {resumeData?.skills.tools?.length && (
             <Text style={styles.listItem}>
               <Text style={styles.boldText}>Tools:</Text> {resumeData?.skills.tools.join(', ')}
             </Text>
           )}
-          {resumeData?.skills.other.length > 0 && (
+          {resumeData?.skills.other?.length && (
             <Text style={styles.listItem}>
               <Text style={styles.boldText}>Other:</Text> {resumeData?.skills.other.join(', ')}
             </Text>
