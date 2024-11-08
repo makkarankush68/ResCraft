@@ -1,5 +1,9 @@
 # Resume Builder using [Next.js](https://nextjs.org)
 
+## TODOS//
+
+- [ ] Migrate to Recoil
+
 ## Getting Started
 
 First, run the development server:

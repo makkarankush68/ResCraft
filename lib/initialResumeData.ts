@@ -1,6 +1,7 @@
-import { ResumeData } from './types';
+import { ResumeDataType } from './types';
 
-export const initialResumeData: ResumeData = {
+export const initialResumeData: ResumeDataType = {
+  title: 'Full Stack Developer',
   personalInfo: {
     name: 'Jane Smith',
     email: 'jane.smith@example.com',

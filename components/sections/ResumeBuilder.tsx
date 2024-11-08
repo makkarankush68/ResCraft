@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { ResumeData } from '@/lib/types';
+import { ResumeDataType } from '@/lib/types';
 import PersonalInfoForm from '../PersonalInfoForm';
 import ProjectsForm from '../ProjectsForm';
 import WorkExperienceForm from '../WorkExperienceForm';
@@ -31,8 +31,8 @@ const ResumeBuilderTabs: { [key: number]: string } = {
 export default function ResumeBuilder() {
   const [loading, setLoading] = useState(true);
   const [step, setStep] = useState(0);
-  const [resumeData, setResumeData] = useState<ResumeData>(initialResumeData);
-  const [previewData, setPreviewData] = useState<ResumeData>(initialResumeData);
+  const [resumeData, setResumeData] = useState<ResumeDataType>(initialResumeData);
+  const [previewData, setPreviewData] = useState<ResumeDataType>(initialResumeData);
   const [selectedTemplate, setSelectedTemplate] = useState<number>(1);
   const [showPDFToolbar, setShowPDFToolbar] = useState(false);
   const [timer, setTimer] = useState<NodeJS.Timeout>();
@@ -41,7 +41,10 @@ export default function ResumeBuilder() {
     if (loading) setLoading(false);
   }, [loading]);
 
-  const updateResumeData = (field: keyof ResumeData, value: ResumeData[keyof ResumeData]) => {
+  const updateResumeData = (
+    field: keyof ResumeDataType,
+    value: ResumeDataType[keyof ResumeDataType]
+  ) => {
     setResumeData((prev) => ({ ...prev, [field]: value }));
     if (timer) {
       clearTimeout(timer);
@@ -51,20 +54,6 @@ export default function ResumeBuilder() {
     }, 1000);
     setTimer(t);
   };
-
-  // useEffect(() => {
-  //   const handleKeyDown = (event: KeyboardEvent) => {
-  //     if (event.key === 'ArrowRight' && step < 6) {
-  //       setStep((prevStep) => prevStep + 1);
-  //     } else if (event.key === 'ArrowLeft' && step > 0) {
-  //       setStep((prevStep) => prevStep - 1);
-  //     }
-  //   };
-  //   window.addEventListener('keydown', handleKeyDown);
-  //   return () => {
-  //     window.removeEventListener('keydown', handleKeyDown);
-  //   };
-  // }, [step]);
 
   const renderStep = () => {
     switch (step) {
@@ -130,6 +119,14 @@ export default function ResumeBuilder() {
     }
   };
 
+  const handleNext = () => {
+    if (!resumeData.title) {
+      alert('Please choose a template');
+      return;
+    }
+    setStep(step + 1);
+  };
+
   return (
     <div className="relative z-0 m-auto p-4 lg:p-8">
       <StarsBackground className="absolute -top-20 -z-10" />
@@ -178,7 +175,7 @@ export default function ResumeBuilder() {
             <Button onClick={() => setStep(step - 1)} disabled={step === 0}>
               Previous
             </Button>
-            <Button onClick={() => setStep(step + 1)} disabled={step === 6}>
+            <Button onClick={handleNext} disabled={step === 6}>
               {step === 5 ? 'Finish' : 'Next'}
             </Button>
           </div>

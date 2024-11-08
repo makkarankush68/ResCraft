@@ -40,10 +40,10 @@ export default function RootLayout({
           disableTransitionOnChange
           enableColorScheme={true}
         >
-          <main className="min-h-screen bg-background pt-navHeight font-sans">
+          <main className="bg-background pt-navHeight font-sans">
             <Providers>
               <Header />
-              {children}
+              <div className="min-h-[calc(100vh_-_100px)]">{children}</div>
               <Footer />
             </Providers>
             <div className="fixed inset-0 top-0 -z-10 bg-gradient-to-b from-transparent to-slate-500 dark:from-slate-800 dark:to-transparent"></div>

@@ -1,10 +1,10 @@
-import { ResumeData } from '@/lib/types';
+import { ResumeDataType } from '@/lib/types';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Linkedin, Github, Twitter } from 'lucide-react'; // Example for social icons
 import { AvatarIcon } from '@radix-ui/react-icons';
 
 type ResumeSummaryProps = {
-  data: ResumeData;
+  data: ResumeDataType;
 };
 
 export default function ResumeSummary({ data }: ResumeSummaryProps) {
