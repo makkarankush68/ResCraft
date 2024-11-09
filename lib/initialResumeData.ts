@@ -2,7 +2,7 @@ import { Schema } from 'mongoose';
 import { ResumeDataType } from './types';
 
 export const initialResumeData: ResumeDataType = {
-  _id : new Schema.Types.ObjectId('temp'),
+  _id: new Schema.Types.ObjectId('temp'),
   title: 'full-stack-developer',
   personalInfo: {
     name: 'Jane Smith',
@@ -70,5 +70,7 @@ export const initialResumeData: ResumeDataType = {
     other: ['Project Management', 'Agile Methodologies', 'Public Speaking']
   },
   userId: new Schema.Types.ObjectId('temp'),
-  createdAt: new Date()
+  createdAt: new Date(),
+  isPublic: false,
+  template: 1
 };

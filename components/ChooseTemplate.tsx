@@ -8,6 +8,8 @@ const ChooseTemplate = ({
   selectedTemplate: number;
   setSelectedTemplate: (value: number) => void;
 }) => {
+  console.log('selectedTemplate', selectedTemplate);
+
   return (
     <div className="flex h-full w-full items-center justify-around max-md:flex-col">
       <div>

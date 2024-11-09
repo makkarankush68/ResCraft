@@ -53,4 +53,6 @@ export type ResumeDataType = {
   skills: Skills;
   userId: Schema.Types.ObjectId;
   createdAt?: Date;
+  isPublic: boolean;
+  template: number;
 };

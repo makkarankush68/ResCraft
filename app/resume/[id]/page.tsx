@@ -1,11 +1,9 @@
 import NotFound from '@/app/not-found';
 import ResumeBuilder from '@/components/sections/ResumeBuilder';
+import ViewResume from '@/components/ViewResume';
 import dbConnect from '@/lib/dbConnect';
 import { ResumeDataType } from '@/lib/types';
 import { ResumeModel } from '@/model/Resume';
-import { UserModel } from '@/model/User';
-import { getServerSession } from 'next-auth';
-import { redirect } from 'next/navigation';
 
 const Page = async ({
   params
@@ -14,14 +12,8 @@ const Page = async ({
     id: string;
   };
 }) => {
-  const session = await getServerSession();
-  if (!session) {
-    return redirect('/login');
-  }
   await dbConnect();
-  const user = await UserModel.findOne({ email: session.user?.email });
-  let res = await ResumeModel.findOne({ _id: params.id, userId: user._id }).lean();
-
+  let res = await ResumeModel.findById(params.id).lean();
   if (!res) {
     return <NotFound />;
   }
@@ -48,10 +40,9 @@ const Page = async ({
     return rest;
   });
 
-  console.log('res', res);
-  
+  if (!res.isPublic) return <NotFound />;
 
-  return <ResumeBuilder initial={res as ResumeDataType} />;
+  return <ViewResume data={res as ResumeDataType} />;
 };
 
 export default Page;

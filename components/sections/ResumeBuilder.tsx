@@ -15,7 +15,6 @@ import { Download } from 'lucide-react';
 import { PDFViewer, PDFDownloadLink } from '@react-pdf/renderer';
 import ChooseTemplate from '../ChooseTemplate';
 import { toast } from '@/hooks/use-toast';
-import { useRouter } from 'next/navigation';
 
 const ResumeBuilderTabs: { [key: number]: string } = {
   0: 'Choose Template',
@@ -32,26 +31,13 @@ export default function ResumeBuilder({ initial }: { initial: ResumeDataType }) 
   const [step, setStep] = useState(0);
   const [resumeData, setResumeData] = useState<ResumeDataType>(initial);
   const [previewData, setPreviewData] = useState<ResumeDataType>(initial);
-  const [selectedTemplate, setSelectedTemplate] = useState<number>(1);
+  const [selectedTemplate, setSelectedTemplate] = useState<number>(initial.template);
   const [showPDFToolbar, setShowPDFToolbar] = useState(false);
   const [timer, setTimer] = useState<NodeJS.Timeout>();
-  const router = useRouter();
 
   useEffect(() => {
     if (loading) setLoading(false);
-
-    const handlePopState = (e: PopStateEvent) => {
-      e.preventDefault();
-      console.log('popstate');
-      router.push('/resume');
-    };
-
-    window.addEventListener('popstate', handlePopState);
-
-    return () => {
-      window.removeEventListener('popstate', handlePopState);
-    };
-  }, [loading, router]);
+  }, [loading]);
 
   const updateResumeData = (
     field: keyof ResumeDataType,
@@ -85,10 +71,18 @@ export default function ResumeBuilder({ initial }: { initial: ResumeDataType }) 
         });
       } else {
         console.error('Failed to update resume');
+        toast({
+          description: 'Failed to update resume',
+          variant: 'destructive'
+        });
       }
     };
     if (!loading) patchResumeData();
   }, [previewData]);
+
+  useEffect(() => {
+    updateResumeData('template', selectedTemplate);
+  }, [selectedTemplate]);
 
   const renderStep = () => {
     switch (step) {

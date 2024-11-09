@@ -107,10 +107,20 @@ const resumeSchema = new mongoose.Schema<ResumeDataType>(
     createdAt: {
       type: Date,
       default: Date.now
+    },
+    isPublic: {
+      type: Boolean,
+      default: false
+    },
+    template: {
+      type: Number,
+      required: [true, 'Template is required'],
+      default: 1
     }
   },
   { timestamps: true }
 );
+
 const ResumeModel = mongoose?.models?.Resume || mongoose.model('Resume', resumeSchema);
 
 export { ResumeModel };
