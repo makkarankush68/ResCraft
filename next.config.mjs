@@ -4,7 +4,7 @@ const nextConfig = {
     domains: ['gifdb.com']
   },
   eslint: {
-    ignoreDuringBuilds: true
+    // ignoreDuringBuilds: true
   },
   experimental: {
     serverComponentsExternalPackages: ['@react-pdf/renderer']
