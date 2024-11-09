@@ -3,6 +3,7 @@ import { ArrowUpNarrowWideIcon } from 'lucide-react';
 import { Modal, ModalBody, ModalContent, ModalTrigger } from './ui/animated-modal';
 import { initialResumeData } from '@/lib/initialResumeData';
 import { useRouter } from 'next/navigation';
+import { toast } from '@/hooks/use-toast';
 
 const NewResumeModal = ({
   slug,
@@ -36,10 +37,12 @@ const NewResumeModal = ({
       })
     });
     if (res.ok) {
-      console.log('Resume created successfully');
+      toast({
+        description: 'Resume created successfully ✅',
+        type: 'foreground'
+      });
       const data = await res.json();
-      console.log('Response:', `/resume/edit/${data.resume._id}`);
-      router.push(`/resume/edit/${data.resume._id}`);
+      window.location.href = `/resume/edit/${data.resume._id}`;
     } else {
       console.error('Failed to create resume');
     }
@@ -47,7 +50,7 @@ const NewResumeModal = ({
 
   return (
     <Modal>
-      <ModalTrigger className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none">
+      <ModalTrigger className="relative mb-6 inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none">
         <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
         <span className="mx-auto inline-flex h-full w-fit cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 font-semibold text-white backdrop-blur-3xl">
           Create New Resume

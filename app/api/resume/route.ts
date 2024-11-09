@@ -50,3 +50,18 @@ export async function PATCH(req: NextRequest) {
   }
   return NextResponse.json({ message: 'Invalid request or resume not found' }, { status: 400 });
 }
+
+export async function DELETE(req: NextRequest) {
+  await dbConnect();
+  const session = await getServerSession();
+  const email = session?.user?.email;
+  const { id } = await req.json();
+  const user = await UserModel.findOne({ email });
+  if (user && id) {
+    const deletedResume = await ResumeModel.findOneAndDelete({ userId: user._id, _id: id });
+    if (deletedResume) {
+      return NextResponse.json({ message: 'Resume deleted' }, { status: 200 });
+    }
+  }
+  return NextResponse.json({ message: 'Invalid request or resume not found' }, { status: 400 });
+}

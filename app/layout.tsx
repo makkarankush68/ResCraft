@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import './globals.css';
-import { ThemeProvider } from '@/components/ThemeProvider';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Providers from '@/lib/Providers';
+import { Toaster } from '@/components/ui/toaster';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -29,26 +29,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} bg-inherit text-inherit antialiased [background:none]`}
-      >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          forcedTheme="dark"
-          enableSystem
-          disableTransitionOnChange
-          enableColorScheme={true}
-        >
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <Providers>
           <main className="bg-background pt-navHeight font-sans">
-            <Providers>
-              <Header />
-              <div className="min-h-[calc(100vh_-_100px)]">{children}</div>
-              <Footer />
-            </Providers>
+            <Header />
+            <div className="min-h-[calc(100vh_-_100px)]">{children}</div>
+            <Footer />
             <div className="fixed inset-0 top-0 -z-10 bg-gradient-to-b from-transparent to-slate-500 dark:from-slate-800 dark:to-transparent"></div>
           </main>
-        </ThemeProvider>
+        </Providers>
+        <Toaster />
       </body>
     </html>
   );

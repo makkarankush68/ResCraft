@@ -14,6 +14,8 @@ import ResumePreview3 from '../previews/ResumePreview3';
 import { Download } from 'lucide-react';
 import { PDFViewer, PDFDownloadLink } from '@react-pdf/renderer';
 import ChooseTemplate from '../ChooseTemplate';
+import { toast } from '@/hooks/use-toast';
+import { useRouter } from 'next/navigation';
 
 const ResumeBuilderTabs: { [key: number]: string } = {
   0: 'Choose Template',
@@ -26,8 +28,6 @@ const ResumeBuilderTabs: { [key: number]: string } = {
 };
 
 export default function ResumeBuilder({ initial }: { initial: ResumeDataType }) {
-  console.log('initial:', initial);
-
   const [loading, setLoading] = useState(true);
   const [step, setStep] = useState(0);
   const [resumeData, setResumeData] = useState<ResumeDataType>(initial);
@@ -35,9 +35,22 @@ export default function ResumeBuilder({ initial }: { initial: ResumeDataType }) 
   const [selectedTemplate, setSelectedTemplate] = useState<number>(1);
   const [showPDFToolbar, setShowPDFToolbar] = useState(false);
   const [timer, setTimer] = useState<NodeJS.Timeout>();
+  const router = useRouter();
 
   useEffect(() => {
     if (loading) setLoading(false);
+
+    const handlePopState = (e: PopStateEvent) => {
+      e.preventDefault();
+      console.log('popstate');
+      router.push('/resume');
+    };
+
+    window.addEventListener('popstate', handlePopState);
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
   }, [loading]);
 
   const updateResumeData = (
@@ -55,7 +68,6 @@ export default function ResumeBuilder({ initial }: { initial: ResumeDataType }) 
   };
 
   useEffect(() => {
-    setPreviewData(previewData);
     const patchResumeData = async () => {
       const res = await fetch(`/api/resume/`, {
         method: 'PATCH',
@@ -67,12 +79,15 @@ export default function ResumeBuilder({ initial }: { initial: ResumeDataType }) 
         })
       });
       if (res.ok) {
-        console.log('Resume updated successfully');
+        toast({
+          description: 'Resume updated successfully ✅',
+          type: 'foreground'
+        });
       } else {
         console.error('Failed to update resume');
       }
     };
-    patchResumeData();
+    if (!loading) patchResumeData();
   }, [previewData]);
 
   const renderStep = () => {

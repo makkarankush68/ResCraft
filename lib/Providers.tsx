@@ -1,4 +1,5 @@
 'use client';
+import { ThemeProvider } from '@/components/ThemeProvider';
 import { SessionProvider } from 'next-auth/react';
 
 const Providers = ({
@@ -9,18 +10,27 @@ const Providers = ({
   [key: string]: unknown;
 }) => {
   return (
-    <SessionProvider
-      session={
-        props.session as {
-          user: { name: string; email: string; image: string };
-          expires: string;
-          accessToken: string;
-          refreshToken: string;
-        } | null
-      }
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="dark"
+      forcedTheme="dark"
+      enableSystem
+      disableTransitionOnChange
+      enableColorScheme={true}
     >
-      {children}
-    </SessionProvider>
+      <SessionProvider
+        session={
+          props.session as {
+            user: { name: string; email: string; image: string };
+            expires: string;
+            accessToken: string;
+            refreshToken: string;
+          } | null
+        }
+      >
+        {children}
+      </SessionProvider>
+    </ThemeProvider>
   );
 };
 

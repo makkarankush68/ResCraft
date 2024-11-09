@@ -44,6 +44,7 @@ export type Skills = {
 };
 
 export type ResumeDataType = {
+  _id: Schema.Types.ObjectId;
   title: string;
   personalInfo: PersonalInfo;
   projects: Project[];

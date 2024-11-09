@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import React from 'react';
 
-const not_found = () => {
+const NotFound = () => {
   return (
     <div className="absolute inset-0 flex h-full flex-1 flex-col items-center justify-center gap-4">
       <h1 className="mt-10 text-center text-4xl font-semibold">404 - Page Not Found</h1>
@@ -11,4 +11,4 @@ const not_found = () => {
   );
 };
 
-export default not_found;
+export default NotFound;
