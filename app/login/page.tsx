@@ -23,7 +23,8 @@ export default function AuthPage() {
   const [isSignUp, setIsSignUp] = useState(false);
 
   const session = useSession();
-  if (session) {
+
+  if (session.data) {
     redirect('/');
   }
 
