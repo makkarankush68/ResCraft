@@ -5,63 +5,80 @@ import { UserModel } from '@/model/User';
 import { getServerSession } from 'next-auth';
 
 export async function GET() {
-  await dbConnect();
-  const session = await getServerSession();
-  const email = session?.user?.email;
-  const user = await UserModel.findOne({ email });
-  if (user) {
-    const resumes = await ResumeModel.find({ userId: user._id });
-    if (resumes) {
-      return NextResponse.json(resumes, { status: 200 });
+  try {
+    await dbConnect();
+    const session = await getServerSession();
+    const email = session?.user?.email;
+    const user = await UserModel.findOne({ email });
+    if (user) {
+      const resumes = await ResumeModel.find({ userId: user._id });
+      if (resumes) {
+        return NextResponse.json(resumes, { status: 200 });
+      }
     }
+    return NextResponse.json({ message: 'Resume not found' }, { status: 404 });
+  } catch (error) {
+    return NextResponse.json({ message: 'Internal server error', error }, { status: 500 });
   }
-  return NextResponse.json({ message: 'Resume not found' }, { status: 404 });
 }
 
 export async function POST(req: NextRequest) {
-  await dbConnect();
-  const session = await getServerSession();
-  const email = session?.user?.email;
-  const { data } = await req.json();
-  const user = await UserModel.findOne({ email });
-  if (user && data) {
-    const newResume = new ResumeModel({ ...data, userId: user._id });
-    const resume = await newResume.save();
-    return NextResponse.json({ message: 'Resume created', resume }, { status: 201 });
-  } else {
-    return NextResponse.json({ message: 'Invalid request' }, { status: 400 });
+  try {
+    await dbConnect();
+    const session = await getServerSession();
+    const email = session?.user?.email;
+    const { data } = await req.json();
+    const user = await UserModel.findOne({ email });
+    if (user && data) {
+      const { _id, ...rest } = data;
+      const newResume = new ResumeModel({ ...rest, userId: user._id });
+      const resume = await newResume.save();
+      return NextResponse.json({ message: 'Resume created', resume }, { status: 201 });
+    } else {
+      return NextResponse.json({ message: 'Invalid request' }, { status: 400 });
+    }
+  } catch (error) {
+    return NextResponse.json({ message: 'Internal server error', error }, { status: 500 });
   }
 }
 
 export async function PATCH(req: NextRequest) {
-  await dbConnect();
-  const session = await getServerSession();
-  const email = session?.user?.email;
-  const { data } = await req.json();
-  const user = await UserModel.findOne({ email });
-  if (user && data) {
-    const updatedResume = await ResumeModel.findOneAndUpdate(
-      { userId: user._id, _id: data._id },
-      data
-    );
-    if (updatedResume) {
-      return NextResponse.json({ message: 'Resume updated' }, { status: 200 });
+  try {
+    await dbConnect();
+    const session = await getServerSession();
+    const email = session?.user?.email;
+    const { data } = await req.json();
+    const user = await UserModel.findOne({ email });
+    if (user && data) {
+      const updatedResume = await ResumeModel.findOneAndUpdate(
+        { userId: user._id, _id: data._id },
+        data
+      );
+      if (updatedResume) {
+        return NextResponse.json({ message: 'Resume updated' }, { status: 200 });
+      }
     }
+    return NextResponse.json({ message: 'Invalid request or resume not found' }, { status: 400 });
+  } catch (error) {
+    return NextResponse.json({ message: 'Internal server error', error }, { status: 500 });
   }
-  return NextResponse.json({ message: 'Invalid request or resume not found' }, { status: 400 });
 }
 
 export async function DELETE(req: NextRequest) {
-  await dbConnect();
-  const session = await getServerSession();
-  const email = session?.user?.email;
-  const { id } = await req.json();
-  const user = await UserModel.findOne({ email });
-  if (user && id) {
-    const deletedResume = await ResumeModel.findOneAndDelete({ userId: user._id, _id: id });
-    if (deletedResume) {
-      return NextResponse.json({ message: 'Resume deleted' }, { status: 200 });
+  try {
+    await dbConnect();
+    const session = await getServerSession();
+    const email = session?.user?.email;
+    const { id } = await req.json();
+    const user = await UserModel.findOne({ email });
+    if (user && id) {
+      const deletedResume = await ResumeModel.findOneAndDelete({ userId: user._id, _id: id });
+      if (deletedResume) {
+        return NextResponse.json({ message: 'Resume deleted' }, { status: 200 });
+      }
     }
+    return NextResponse.json({ message: 'Invalid request or resume not found' }, { status: 400 });
+  } catch (error) {
+    return NextResponse.json({ message: 'Internal server error', error }, { status: 500 });
   }
-  return NextResponse.json({ message: 'Invalid request or resume not found' }, { status: 400 });
 }

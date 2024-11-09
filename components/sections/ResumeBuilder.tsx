@@ -51,7 +51,7 @@ export default function ResumeBuilder({ initial }: { initial: ResumeDataType }) 
     return () => {
       window.removeEventListener('popstate', handlePopState);
     };
-  }, [loading]);
+  }, [loading, router]);
 
   const updateResumeData = (
     field: keyof ResumeDataType,

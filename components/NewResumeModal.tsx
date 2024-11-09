@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { ArrowUpNarrowWideIcon } from 'lucide-react';
 import { Modal, ModalBody, ModalContent, ModalTrigger } from './ui/animated-modal';
 import { initialResumeData } from '@/lib/initialResumeData';
-import { useRouter } from 'next/navigation';
 import { toast } from '@/hooks/use-toast';
 
 const NewResumeModal = ({
@@ -13,7 +12,6 @@ const NewResumeModal = ({
   setSlug: React.Dispatch<React.SetStateAction<string | null>>;
 }) => {
   const [resumeName, setResumeName] = useState('');
-  const router = useRouter();
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const name = e.target.value;
     setResumeName(name);

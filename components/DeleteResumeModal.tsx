@@ -1,6 +1,5 @@
 import { Trash } from 'lucide-react';
-import { Modal, ModalBody, ModalContent, ModalTrigger, useModal } from './ui/animated-modal';
-import { useRouter } from 'next/navigation';
+import { Modal, ModalBody, ModalContent, ModalTrigger} from './ui/animated-modal';
 import { toast } from '@/hooks/use-toast';
 import { ResumeDataType } from '@/lib/types';
 

@@ -2,6 +2,7 @@ import { Schema } from 'mongoose';
 import { ResumeDataType } from './types';
 
 export const initialResumeData: ResumeDataType = {
+  _id : new Schema.Types.ObjectId('temp'),
   title: 'full-stack-developer',
   personalInfo: {
     name: 'Jane Smith',
