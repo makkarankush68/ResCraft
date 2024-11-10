@@ -23,9 +23,20 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
+import { HoverBorderGradient } from './ui/hover-border-gradient';
 
 const NavLinks = () => (
   <>
+    <li>
+      <Link href="/ats" passHref>
+        <HoverBorderGradient
+          className="flex items-center justify-center gap-1.5 text-base tracking-wide"
+          containerClassName="mx-auto "
+        >
+          Get ATS Score
+        </HoverBorderGradient>
+      </Link>
+    </li>
     <li>
       <Link href="/#features" className="transition-colors hover:text-[var(--slate-6-4)]">
         Features
@@ -39,11 +50,6 @@ const NavLinks = () => (
     <li>
       <Link href="#" className="transition-colors hover:text-[var(--slate-6-4)]">
         About
-      </Link>
-    </li>
-    <li>
-      <Link href="#" className="transition-colors hover:text-[var(--slate-6-4)]">
-        Contact
       </Link>
     </li>
   </>
@@ -106,7 +112,7 @@ const Header = () => (
         </motion.div>
       </Link>
       <nav className="flex items-center gap-6">
-        <ul className="flex space-x-4 max-sm:hidden">
+        <ul className="flex items-center space-x-4 max-sm:hidden">
           <NavLinks />
         </ul>
         <UserAvatar />

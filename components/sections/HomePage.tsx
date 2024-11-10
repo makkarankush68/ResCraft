@@ -3,7 +3,17 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
-import { Zap, Award, Briefcase, GraduationCap, ArrowRight, Mail, Shield } from 'lucide-react';
+import {
+  Zap,
+  Award,
+  Briefcase,
+  GraduationCap,
+  ArrowRight,
+  Mail,
+  Shield,
+  CheckCircle,
+  FileText
+} from 'lucide-react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { HoverBorderGradient } from '../ui/hover-border-gradient';
@@ -11,7 +21,7 @@ import { LampContainer } from '../ui/lamp';
 
 // Hero Section Component
 const HeroSection = () => (
-  <LampContainer className="relative -mt-[var(--navHeight)] flex min-h-[calc(100vh_-_var(--navHeight))] items-center justify-center">
+  <LampContainer className="relative -mt-[var(--navHeight)]  flex min-h-0 h-[calc(97vh_-_var(--navHeight))] items-center justify-center">
     <motion.div
       initial={{ opacity: 0.5, y: -10 }}
       whileInView={{ opacity: 1, y: 200 }}
@@ -23,7 +33,7 @@ const HeroSection = () => (
       className="bg-gradient-to-br from-slate-100 to-slate-500 bg-clip-text py-4 text-center text-4xl font-medium tracking-tight text-transparent md:text-7xl"
     >
       <motion.h1
-        className="sm:m-8 max-sm:mb-4 max-sm:m-2 flex flex-wrap justify-center gap-2.5 text-4xl font-bold sm:text-5xl md:text-7xl"
+        className="flex flex-wrap justify-center gap-2.5 text-4xl font-bold max-sm:m-2 max-sm:mb-4 sm:m-8 sm:text-5xl md:text-7xl"
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -207,11 +217,140 @@ const EmailSection = () => {
   );
 };
 
+// ATS Intro Section Component
+const ATSIntroSection = () => {
+  const benefits = [
+    "Instantly analyze your resume's ATS compatibility",
+    'Get detailed feedback on keyword optimization',
+    'Identify formatting issues that could block your resume',
+    'Receive suggestions for improvement'
+  ];
+
+  return (
+    <div className="bg-background pb-16 pt-8">
+      <div className="container mx-auto px-4">
+        <motion.div
+          className="mx-auto max-w-4xl"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <Card className="overflow-hidden border-primary/10 bg-primary/5">
+            <CardContent className="p-0">
+              <div className="grid gap-6 md:grid-cols-2">
+                {/* Left side - Content */}
+                <div className="space-y-6 p-6 md:p-8">
+                  <h2 className="text-2xl font-bold leading-tight tracking-tighter md:text-3xl">
+                    Is Your Resume ATS-Friendly?
+                  </h2>
+
+                  <p className="text-lg text-primary/80">
+                    75% of resumes are rejected by ATS before reaching human eyes. Don{"'"}t let
+                    yours be one of them.
+                  </p>
+
+                  <ul className="space-y-3">
+                    {benefits.map((benefit, index) => (
+                      <motion.li
+                        key={index}
+                        className="flex items-center gap-2"
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.1 }}
+                      >
+                        <CheckCircle className="h-5 w-5 flex-shrink-0 text-green-500" />
+                        <span className="text-sm">{benefit}</span>
+                      </motion.li>
+                    ))}
+                  </ul>
+
+                  <Link href="/ats" className="inline-block">
+                    <Button className="group" size="lg">
+                      Check Your Score Free
+                      <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    </Button>
+                  </Link>
+                </div>
+
+                {/* Right side - Protected Resume Illustration */}
+                <div className="relative hidden bg-gradient-to-br from-primary/5 to-primary/10 md:block">
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="relative h-64 w-64">
+                      {/* Animated outer ring */}
+                      <motion.div
+                        className="absolute inset-0 rounded-full bg-primary/10"
+                        animate={{
+                          scale: [1, 1.2, 1],
+                          opacity: [0.3, 0.5, 0.3]
+                        }}
+                        transition={{
+                          duration: 3,
+                          repeat: Infinity,
+                          ease: 'easeInOut'
+                        }}
+                      />
+
+                      {/* Middle shield layer */}
+                      <motion.div
+                        className="absolute inset-0 m-auto flex items-center justify-center"
+                        initial={{ scale: 0.9 }}
+                        animate={{ scale: 1 }}
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity,
+                          repeatType: 'reverse',
+                          ease: 'easeInOut'
+                        }}
+                      >
+                        <Shield className="h-48 w-48 text-primary/70" />
+                      </motion.div>
+
+                      {/* Resume icon */}
+                      <motion.div
+                        className="absolute inset-0 top-1/2"
+                        animate={{
+                          y: [-5, 5, -5]
+                        }}
+                        transition={{
+                          duration: 4,
+                          repeat: Infinity,
+                          ease: 'easeInOut'
+                        }}
+                      >
+                        <FileText className="-m-6 mx-auto h-16 w-16 text-primary" />
+                      </motion.div>
+
+                      {/* Animated protection lines */}
+                      <motion.div
+                        className="absolute inset-0 rounded-full border-2 border-primary/20"
+                        animate={{
+                          scale: [1, 1.1, 1],
+                          opacity: [1, 0, 1]
+                        }}
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity,
+                          ease: 'easeInOut'
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
+      </div>
+    </div>
+  );
+};
+
 // HomePage Component
 export default function HomePage() {
   return (
     <div className="min-h-screen">
       <HeroSection />
+      <ATSIntroSection />
       <FeaturesSection />
       <EmailSection />
     </div>

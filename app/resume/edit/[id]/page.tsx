@@ -48,8 +48,6 @@ const Page = async ({
     return rest;
   });
 
-  console.log('res', res);
-  
 
   return <ResumeBuilder initial={res as ResumeDataType} />;
 };
