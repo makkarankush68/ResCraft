@@ -102,6 +102,7 @@ export default function ProjectsForm({ data, updateData }: ProjectsFormProps) {
                   <div key={descIndex} className="mt-2 flex items-center space-x-2">
                     <Input
                       value={desc}
+                      maxLength={100}
                       onChange={(e) => {
                         const newDescription = [...project.description];
                         newDescription[descIndex] = e.target.value;

@@ -1,8 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import NotFound from '@/app/not-found';
-import ResumeBuilder from '@/components/sections/ResumeBuilder';
 import ViewResume from '@/components/ViewResume';
 import dbConnect from '@/lib/dbConnect';
-import { ResumeDataType } from '@/lib/types';
+import { Education, Project, ResumeDataType, WorkExperience } from '@/lib/types';
 import { ResumeModel } from '@/model/Resume';
 
 const Page = async ({
@@ -18,6 +18,8 @@ const Page = async ({
     return <NotFound />;
   }
 
+  if (!(res as ResumeDataType).isPublic) return <NotFound />;
+
   if (res)
     res = {
       ...res,
@@ -25,22 +27,20 @@ const Page = async ({
       userId: (res as ResumeDataType).userId.toString()
     };
 
-  res.projects = res.projects.map((project: any) => {
+  res.projects = res.projects.map((project: Project & { _id: string }) => {
     const { _id, ...rest } = project;
     return rest;
   });
 
-  res.workExperience = res.workExperience.map((work: any) => {
+  res.workExperience = res.workExperience.map((work: WorkExperience & { _id: string }) => {
     const { _id, ...rest } = work;
     return rest;
   });
 
-  res.education = res.education.map((edu: any) => {
+  res.education = res.education.map((edu: Education & { _id: string }) => {
     const { _id, ...rest } = edu;
     return rest;
   });
-
-  if (!res.isPublic) return <NotFound />;
 
   return <ViewResume data={res as ResumeDataType} />;
 };

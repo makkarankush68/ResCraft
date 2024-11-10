@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import NotFound from '@/app/not-found';
 import ResumeBuilder from '@/components/sections/ResumeBuilder';
 import dbConnect from '@/lib/dbConnect';
-import { ResumeDataType } from '@/lib/types';
+import { Education, Project, ResumeDataType, WorkExperience } from '@/lib/types';
 import { ResumeModel } from '@/model/Resume';
 import { UserModel } from '@/model/User';
 import { getServerSession } from 'next-auth';
@@ -15,11 +16,8 @@ const Page = async ({
   };
 }) => {
   const session = await getServerSession();
-  if (!session) {
-    return redirect('/login');
-  }
   await dbConnect();
-  const user = await UserModel.findOne({ email: session.user?.email });
+  const user = await UserModel.findOne({ email: session?.user?.email });
   let res = await ResumeModel.findOne({ _id: params.id, userId: user._id }).lean();
 
   if (!res) {
@@ -33,21 +31,20 @@ const Page = async ({
       userId: (res as ResumeDataType).userId.toString()
     };
 
-  res.projects = res.projects.map((project: any) => {
+  res.projects = res.projects.map((project: Project & { _id: string }) => {
     const { _id, ...rest } = project;
     return rest;
   });
 
-  res.workExperience = res.workExperience.map((work: any) => {
+  res.workExperience = res.workExperience.map((work: WorkExperience & { _id: string }) => {
     const { _id, ...rest } = work;
     return rest;
   });
 
-  res.education = res.education.map((edu: any) => {
+  res.education = res.education.map((edu: Education & { _id: string }) => {
     const { _id, ...rest } = edu;
     return rest;
   });
-
 
   return <ResumeBuilder initial={res as ResumeDataType} />;
 };

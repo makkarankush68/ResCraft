@@ -30,6 +30,7 @@ export async function POST(req: NextRequest) {
     const { data } = await req.json();
     const user = await UserModel.findOne({ email });
     if (user && data) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { _id, ...rest } = data;
       const newResume = new ResumeModel({ ...rest, userId: user._id });
       const resume = await newResume.save();

@@ -109,6 +109,7 @@ export default function WorkExperienceForm({ data, updateData }: WorkExperienceF
                   <div key={descIndex} className="mt-2 flex items-center space-x-2">
                     <Input
                       value={desc}
+                      maxLength={100}
                       onChange={(e) => {
                         const newDescription = [...experience.description];
                         newDescription[descIndex] = e.target.value;

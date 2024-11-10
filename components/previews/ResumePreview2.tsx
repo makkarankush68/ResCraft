@@ -1,7 +1,6 @@
 import { Document, Page, Text, View, StyleSheet, Link, Font } from '@react-pdf/renderer';
 import { ResumeDataType } from '../../lib/types';
 
-// Register font for enhanced styling
 Font.register({
   family: 'Oswald',
   src: 'https://fonts.gstatic.com/s/oswald/v13/Y_TKV6o8WovbUd3m_X9aAA.ttf'
@@ -12,37 +11,37 @@ const ResumePreview = ({ resumeData }: { resumeData: ResumeDataType }) => (
     <Page size="A4" style={styles.page}>
       {/* Header */}
       <View style={styles.header}>
-        <View style={styles.headerLeft}>
-          <Text style={styles.name}>{resumeData?.personalInfo?.name}</Text>
-          <Text style={styles.position}>{resumeData?.personalInfo?.summary}</Text>
-          <Text style={styles.contact}>
-            <Link style={styles.link} src={`mailto:${resumeData?.personalInfo?.email}`}>
-              {resumeData?.personalInfo?.email}
-            </Link>
-            {' | '} {resumeData?.personalInfo?.phone} | {resumeData?.personalInfo?.location}
-          </Text>
-          <View style={styles.socialLinks}>
+        <Text style={styles.name}>{resumeData?.personalInfo?.name}</Text>
+        <Text style={styles.contact}>
+          <Link style={styles.link} src={`mailto:${resumeData?.personalInfo?.email}`}>
+            {resumeData?.personalInfo?.email}
+          </Link>
+          {' • '} {resumeData?.personalInfo?.phone} {' • '} {resumeData?.personalInfo?.location}
+        </Text>
+        <View style={styles.socialLinks}>
+          {resumeData?.personalInfo?.linkedin && (
             <Link style={styles.link} src={resumeData?.personalInfo?.linkedin}>
               LinkedIn
             </Link>
+          )}
+          {resumeData?.personalInfo?.github && (
             <Link style={styles.link} src={resumeData?.personalInfo?.github}>
               GitHub
             </Link>
-            <Link style={styles.link} src={resumeData?.personalInfo?.twitter}>
-              Twitter
-            </Link>
+          )}
+          {resumeData?.personalInfo?.portfolio && (
             <Link style={styles.link} src={resumeData?.personalInfo?.portfolio}>
               Portfolio
             </Link>
-          </View>
+          )}
         </View>
       </View>
 
-      {/* Profile Section */}
+      {/* Profile Summary */}
       {resumeData?.personalInfo?.summary && (
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Profile</Text>
-          <Text style={styles.info}>{resumeData?.personalInfo?.summary}</Text>
+          <Text style={styles.sectionTitle}>Professional Summary</Text>
+          <Text style={styles.summaryText}>{resumeData?.personalInfo?.summary}</Text>
         </View>
       )}
 
@@ -50,48 +49,56 @@ const ResumePreview = ({ resumeData }: { resumeData: ResumeDataType }) => (
       {resumeData?.skills && (
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Skills</Text>
-          {resumeData?.skills.technical?.length && (
-            <Text style={styles.listItem}>
-              <Text style={styles.boldText}>Technical:</Text>{' '}
-              {resumeData?.skills.technical.join(', ')}
-            </Text>
-          )}
-          {resumeData?.skills.soft?.length && (
-            <Text style={styles.listItem}>
-              <Text style={styles.boldText}>Soft Skills:</Text> {resumeData?.skills.soft.join(', ')}
-            </Text>
-          )}
-          {resumeData?.skills.tools?.length && (
-            <Text style={styles.listItem}>
-              <Text style={styles.boldText}>Tools:</Text> {resumeData?.skills.tools.join(', ')}
-            </Text>
-          )}
-          {resumeData?.skills.other?.length && (
-            <Text style={styles.listItem}>
-              <Text style={styles.boldText}>Other:</Text> {resumeData?.skills.other.join(', ')}
-            </Text>
-          )}
+          <View style={styles.skillsGrid}>
+            {resumeData?.skills.technical?.length && (
+              <View style={styles.skillCategory}>
+                <Text style={styles.skillItem}>
+                  <Text style={styles.boldText}>Technical:</Text>{' '}
+                  {resumeData?.skills.technical.join(' • ')}
+                </Text>
+              </View>
+            )}
+            {resumeData?.skills.tools?.length && (
+              <View style={styles.skillCategory}>
+                <Text style={styles.skillItem}>
+                  <Text style={styles.boldText}>Tools:</Text> {resumeData?.skills.tools.join(' • ')}
+                </Text>
+              </View>
+            )}
+            {resumeData?.skills.soft?.length && (
+              <View style={styles.skillCategory}>
+                <Text style={styles.skillItem}>
+                  <Text style={styles.boldText}>Soft Skills:</Text>{' '}
+                  {resumeData?.skills.soft.join(' • ')}
+                </Text>
+              </View>
+            )}
+          </View>
         </View>
       )}
 
       {/* Work Experience Section */}
       {resumeData?.workExperience?.length > 0 && (
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Work Experience</Text>
+          <Text style={styles.sectionTitle}>Professional Experience</Text>
           {resumeData?.workExperience.map((job, index) => (
-            <View key={index} style={styles.jobContainer}>
-              <Text>
-                {job?.company} ({job?.startDate} - {job?.endDate})
-              </Text>
-              <Text style={styles.listItem}>
+            <View key={index} style={styles.experienceItem}>
+              <View style={styles.experienceHeader}>
                 <Text style={styles.boldText}>{job?.position}</Text>
-              </Text>
-              {job?.description?.length > 0 &&
-                job?.description.map((desc, descIndex) => (
-                  <Text key={descIndex} style={styles.listItem}>
-                    • {desc}
-                  </Text>
-                ))}
+                <Text style={styles.dateText}>
+                  {job?.startDate} - {job?.endDate}
+                </Text>
+              </View>
+              <Text style={styles.companyText}>{job?.company}</Text>
+              {job?.description?.length > 0 && (
+                <View style={styles.bulletPoints}>
+                  {job?.description.map((desc, descIndex) => (
+                    <Text key={descIndex} style={styles.bulletPoint}>
+                      • {desc}
+                    </Text>
+                  ))}
+                </View>
+              )}
             </View>
           ))}
         </View>
@@ -100,16 +107,16 @@ const ResumePreview = ({ resumeData }: { resumeData: ResumeDataType }) => (
       {/* Projects Section */}
       {resumeData?.projects?.length > 0 && (
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Projects</Text>
+          <Text style={styles.sectionTitle}>Notable Projects</Text>
           {resumeData?.projects.map((project, index) => (
-            <View key={index} style={styles.projectContainer}>
-              <Text style={styles.boldText}>
-                {project?.name} ({project?.date})
-              </Text>
-              <Text style={styles.listItem}>{project?.description.join(' ')}</Text>
-              <Text style={styles.listItem}>
-                <Text style={styles.boldText}>Technologies Used:</Text>{' '}
-                {project?.techUsed.join(', ')}
+            <View key={index} style={styles.projectItem}>
+              <View style={styles.projectHeader}>
+                <Text style={styles.boldText}>{project?.name}</Text>
+                <Text style={styles.dateText}>{project?.date}</Text>
+              </View>
+              <Text style={styles.projectDescription}>{project?.description.join(' ')}</Text>
+              <Text style={styles.techStack}>
+                <Text style={styles.boldText}>Technologies:</Text> {project?.techUsed.join(' • ')}
               </Text>
             </View>
           ))}
@@ -121,10 +128,15 @@ const ResumePreview = ({ resumeData }: { resumeData: ResumeDataType }) => (
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Education</Text>
           {resumeData?.education.map((edu, index) => (
-            <View key={index} style={styles.educationContainer}>
-              <Text style={styles.boldText}>{edu?.degree}</Text>
-              <Text style={styles.educationDetails}>
-                {edu?.institution} | {edu?.startYear} - {edu?.endYear} | {edu?.marks}
+            <View key={index} style={styles.educationItem}>
+              <View style={styles.educationHeader}>
+                <Text style={styles.boldText}>{edu?.degree}</Text>
+                <Text style={styles.dateText}>
+                  {edu?.startYear} - {edu?.endYear}
+                </Text>
+              </View>
+              <Text style={styles.institutionText}>
+                {edu?.institution} {edu?.marks && `| ${edu?.marks}`}
               </Text>
             </View>
           ))}
@@ -134,93 +146,129 @@ const ResumePreview = ({ resumeData }: { resumeData: ResumeDataType }) => (
   </Document>
 );
 
-// Styles
 const styles = StyleSheet.create({
   page: {
-    padding: '40pt',
-    fontSize: '11pt',
+    padding: '30pt',
+    fontSize: '10pt',
     fontFamily: 'Oswald',
-    lineHeight: 1.3,
-    backgroundColor: '#f0f8ff' // Light background for vibrancy
+    lineHeight: 1.4,
+    backgroundColor: '#ffffff'
   },
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: '20pt'
-  },
-  headerLeft: {
-    flex: 1,
-    marginRight: '20pt'
+    marginBottom: '16pt',
+    borderBottom: '1pt solid #e0e0e0',
+    paddingBottom: '12pt'
   },
   name: {
-    fontSize: '28pt',
+    fontSize: '22pt',
     fontWeight: 'bold',
-    color: '#2c3e50' // Darker color for contrast
-  },
-  position: {
-    fontSize: '14pt',
-    marginBottom: '8pt',
-    color: '#34495e' // Slightly lighter color for position
+    marginBottom: '6pt',
+    color: '#1a237e'
   },
   contact: {
     fontSize: '10pt',
-    marginBottom: '8pt',
-    color: '#7f8c8d' // Lighter color for contact details
+    marginBottom: '6pt',
+    color: '#424242'
   },
   socialLinks: {
     flexDirection: 'row',
     marginTop: '4pt'
   },
   section: {
-    width: '100%',
-    marginBottom: '20pt'
+    // marginBottom: '16pt'
   },
   sectionTitle: {
-    fontSize: '12pt',
+    fontSize: '13pt',
     fontWeight: 'bold',
-    marginBottom: '6pt',
-    borderBottom: '2pt solid #2980b9', // Vibrant border color
-    paddingBottom: '2pt',
-    marginTop: '12pt',
-    color: '#2980b9' // Vibrant section title color
+    marginBottom: '8pt',
+    color: '#1a237e',
+    borderBottom: '1.5pt solid #1a237e',
+    // paddingBottom: '4pt'
   },
-  jobContainer: {
-    marginBottom: '12pt',
-    backgroundColor: '#ecf0f1', // Light background for job entries
-    padding: '10pt',
-    borderRadius: '4pt'
-  },
-  projectContainer: {
-    marginBottom: '12pt',
-    backgroundColor: '#ecf0f1', // Light background for project entries
-    padding: '10pt',
-    borderRadius: '4pt'
-  },
-  listItem: {
+  summaryText: {
     fontSize: '10pt',
-    marginBottom: '6pt',
-    textAlign: 'justify'
+    textAlign: 'justify',
+    marginBottom: '8pt',
+    color: '#424242'
   },
-  educationContainer: {
+  skillsGrid: {
+    gap: '6pt'
+  },
+  skillCategory: {
+    marginBottom: '6pt'
+  },
+  skillItem: {
+    fontSize: '10pt',
+    color: '#424242'
+  },
+  experienceItem: {
+    marginBottom: '12pt',
+    paddingBottom: '8pt',
+    borderBottom: '0.5pt solid #e0e0e0'
+  },
+  experienceHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: '4pt'
+  },
+  companyText: {
+    fontSize: '10pt',
+    marginBottom: '4pt',
+    color: '#616161',
+    fontWeight: 'bold'
+  },
+  bulletPoints: {
+    marginLeft: '12pt',
+    marginTop: '4pt'
+  },
+  bulletPoint: {
+    fontSize: '10pt',
+    marginBottom: '3pt',
+    color: '#424242'
+  },
+  projectItem: {
+    marginBottom: '12pt',
+  },
+  projectHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: '4pt'
+  },
+  projectDescription: {
+    fontSize: '10pt',
+    marginBottom: '4pt',
+    color: '#424242'
+  },
+  techStack: {
+    fontSize: '10pt',
+    marginTop: '4pt',
+    color: '#616161'
+  },
+  educationItem: {
     marginBottom: '10pt'
   },
-  educationDetails: {
+  educationHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: '4pt'
+  },
+  institutionText: {
     fontSize: '10pt',
-    color: 'gray'
+    color: '#616161'
+  },
+  dateText: {
+    fontSize: '9pt',
+    color: '#757575'
   },
   boldText: {
     fontWeight: 'bold',
-    color: '#c0392b' // Vibrant color for emphasis
-  },
-  info: {
-    fontSize: '10pt',
-    marginBottom: '8pt',
-    textAlign: 'justify',
-    color: '#2c3e50' // Dark color for general info
+    color: '#2c3e50'
   },
   link: {
-    color: '#2980b9',
+    color: '#1565c0',
     textDecoration: 'none',
     marginRight: '10pt'
   }

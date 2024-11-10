@@ -1,4 +1,4 @@
-// import { getToken } from 'next-auth/jwt';
+import { getToken } from 'next-auth/jwt';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function middleware(request: NextRequest) {
@@ -8,17 +8,17 @@ export async function middleware(request: NextRequest) {
 
   console.log('Middleware is running', path);
   try {
-    // const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
-    // if (!token && path !== '/app/login') {
-    //   return NextResponse.redirect(new URL('/app/login', request.url));
-    // }
+    const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
+    if (!token) {
+      return NextResponse.redirect(new URL('/login', request.url));
+    }
     return response;
   } catch (error) {
     console.error('Error in middleware:', error);
-    return NextResponse.redirect(new URL('/app/login', request.url));
+    return NextResponse.redirect(new URL('/login', request.url));
   }
 }
 
 export const config = {
-  matcher: ['/api/resume']
+  matcher: ['/api/resume', '/resume', '/ats','/resume/edit/:id'],
 };

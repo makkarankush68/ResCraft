@@ -93,6 +93,7 @@ export default function PersonalInfoForm({ data, updateData }: PersonalInfoFormP
           id="summary"
           placeholder="A brief summary about yourself"
           value={data.summary}
+          maxLength={250}
           onChange={handleChange('summary')}
         />
       </CardContent>
